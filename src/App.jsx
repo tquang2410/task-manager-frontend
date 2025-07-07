@@ -12,6 +12,7 @@ import Profile from './pages/Profile';
 
 // Import layout components
 import Header from './components/layout/Header';
+import ProtectedRoute from './components/auth/ProtectedRoute';
 
 // Ant Design theme config
 const theme = {
@@ -34,6 +35,7 @@ function App() {
 
                             {/* Protected routes - with header */}
                             <Route path="/*" element={
+                                <ProtectedRoute>
                                 <div className="app-layout">
                                     <Header />
                                     <main className="app-content">
@@ -46,6 +48,7 @@ function App() {
                                         </Routes>
                                     </main>
                                 </div>
+                                </ProtectedRoute>
                             } />
                         </Routes>
                     </div>
