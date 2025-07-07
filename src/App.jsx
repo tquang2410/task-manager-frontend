@@ -4,11 +4,11 @@ import { AuthProvider } from './context/AuthContext';
 import './styles/global.css';
 
 // Import pages
-import Dashboard from './pages/Dashboard';
-import Login from './pages/Login';
-import Register from './pages/Register';
-import Tasks from './pages/Tasks';
-import Profile from './pages/Profile';
+import DashboardPage from './pages/Dashboard';
+import LoginPage from './pages/Login';
+import RegisterPage from './pages/Register';
+import TasksPage from './pages/Tasks';
+import ProfilePage from './pages/Profile';
 
 // Import layout components
 import Header from './components/layout/Header';
@@ -30,8 +30,8 @@ function App() {
                     <div className="app">
                         <Routes>
                             {/* Public routes - no header */}
-                            <Route path="/login" element={<Login />} />
-                            <Route path="/register" element={<Register />} />
+                            <Route path="/login" element={<LoginPage />} />
+                            <Route path="/register" element={<RegisterPage />} />
 
                             {/* Protected routes - with header */}
                             <Route path="/*" element={
@@ -40,10 +40,10 @@ function App() {
                                     <Header />
                                     <main className="app-content">
                                         <Routes>
-                                            <Route path="/" element={<Dashboard />} />
+                                            <Route path="/" element={<DashboardPage />} />
                                             <Route path="/dashboard" element={<Navigate to="/" replace />} />
-                                            <Route path="/tasks" element={<Tasks />} />
-                                            <Route path="/profile" element={<Profile />} />
+                                            <Route path="/tasks" element={<TasksPage />} />
+                                            <Route path="/profile" element={<ProfilePage />} />
                                             <Route path="*" element={<Navigate to="/" replace />} />
                                         </Routes>
                                     </main>
