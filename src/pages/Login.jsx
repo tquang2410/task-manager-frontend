@@ -1,45 +1,40 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { Form, Input, Button, notification } from 'antd';
 import { UserOutlined, LockOutlined } from '@ant-design/icons';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
+import { authAPI } from '../utils/api';
 const LoginPage = () => {
     const [loading, setLoading] = useState(false);
 const navigate = useNavigate();
 const { login } = useAuth();
 const [form] = Form.useForm();
+
 const onFinish = async (values) => {
-    setLoading(true);
-    try {
-        // Gọi API đăng nhập
-        console.log('Login values:', values);
-        // Giả lập API đăng nhập thành công
-        setTimeout(() => {
-            const mockUser = {
-                name: 'John Doe',
-                email: values.email,
-                role: 'user',
-            };
-            const mockToken = 'mock-jwt-token';
-            login(mockUser, mockToken);
-            notification.success({
-                message: 'Login Successful',
-                description: 'Welcome back!',
+        setLoading(true);
+
+        try {
+            // Call real API instead of mock
+            const response = await authAPI.login(values.email, values.password);
+
+            // Handle successful login
+            if (response.accessToken) {
+                login(response.user, response.accessToken);
+                notification.success({
+                    message: 'Login Successful',
+                    description: `Welcome back, ${response.user.name}!`,
+                });
+                navigate('/');
+            }
+        } catch (error) {
+            notification.error({
+                message: 'Login Failed',
+                description: error.EM || error.message || 'Invalid credentials',
             });
-            navigate('/'); // Điều hướng về trang Dashboard sau khi đăng nhập thành công
+        } finally {
             setLoading(false);
-        }, 1000);
-    }
-    catch (error){
-        notification.error({
-            message: 'Login Failed',
-            description: error.message || 'Invalid credentials',
-        });
-    }
-    finally {
-        setLoading(false);
-    }
-};
+        }
+    };
   return (
    <div className="auth-container">
        <div className="auth-box">
