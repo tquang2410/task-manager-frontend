@@ -17,8 +17,9 @@ const RegisterPage = () => {
 
         try {
             // Call register API
-            // const response = await authAPI.register(values.name, values.email, values.password);
-            const response = await mockAPI.register(values.name, values.email, values.password);
+            const response = await authAPI.register(values.name, values.email, values.password);
+
+            // const response = await mockAPI.register(values.name, values.email, values.password);
             // Handle successful registration
             if (response.accessToken) {
                 // Auto login after successful registration
