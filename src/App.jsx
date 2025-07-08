@@ -13,6 +13,7 @@ import ProfilePage from './pages/Profile';
 // Import layout components
 import Header from './components/layout/Header';
 import ProtectedRoute from './components/auth/ProtectedRoute';
+import { TaskProvider } from './context/TaskContext';
 
 // Ant Design theme config
 const theme = {
@@ -26,6 +27,7 @@ function App() {
     return (
         <ConfigProvider theme={theme}>
             <AuthProvider>
+                <TaskProvider>
                 <Router>
                     <div className="app">
                         <Routes>
@@ -53,6 +55,7 @@ function App() {
                         </Routes>
                     </div>
                 </Router>
+                </TaskProvider>
             </AuthProvider>
         </ConfigProvider>
     );
