@@ -11,11 +11,14 @@ const { login } = useAuth();
 const [form] = Form.useForm();
 
 const onFinish = async (values) => {
+    console.log('✅ FUNCTION onFinish ĐƯỢC GỌI!', values);
         setLoading(true);
 
         try {
             // Call real API instead of mock
+            console.log('🚀 Calling login API with:', values);
             const response = await authAPI.login(values.email, values.password);
+            console.log('📨 Login response received:', response);
 
             // Handle successful login
             if (response.accessToken) {
@@ -73,9 +76,16 @@ const onFinish = async (values) => {
                 />
                </Form.Item>
                <Form.Item>
+                   {/*<Button*/}
+                   {/*    type="primary"*/}
+                   {/*    htmlType="submit"*/}
+                   {/*    loading={loading}*/}
+                   {/*    className="btn-full-width"*/}
+                   {/*>*/}
                    <Button
                        type="primary"
-                       htmlType="submit"
+                       htmlType="button"    // ← Đổi thành button
+                       onClick={() => form.submit()}  // ← Trigger Ant Design submit
                        loading={loading}
                        className="btn-full-width"
                    >

@@ -60,17 +60,25 @@ axiosInstance.interceptors.response.use(
             const { status, data } = response;
 
             switch (status) {
-                case 401:
-                    // Unauthorized - token expired or invalid
+                case 401: {
                     localStorage.removeItem('accessToken');
                     localStorage.removeItem('userData');
-                    notification.error({
-                        message: 'Session Expired',
-                        description: 'Please login again',
-                    });
-                    // Redirect to login (you might want to use navigate here)
-                    window.location.href = '/login';
+
+                    // Check if already on login/register page
+                    const currentPath = window.location.pathname;
+                    if (currentPath === '/login' || currentPath === '/register') {
+                        // Let component handle login errors
+                        return Promise.reject(data);
+                    } else {
+                        // Session expired on authenticated pages
+                        notification.error({
+                            message: 'Session Expired',
+                            description: 'Please login again',
+                        });
+                        window.location.href = '/login';
+                    }
                     break;
+                }
 
                 case 403:
                     // Forbidden - insufficient permissions
