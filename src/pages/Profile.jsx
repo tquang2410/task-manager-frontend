@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { Form, Input, Button, Card, message, Divider } from 'antd';
 import { UserOutlined, MailOutlined, LockOutlined } from '@ant-design/icons';
 import { useAuth } from '../context/AuthContext';
+import {authAPI} from "../utils/api.js";
 
 const ProfilePage = () => {
     const { user, updateUser } = useAuth();
@@ -13,19 +14,12 @@ const ProfilePage = () => {
         setLoading(true);
 
         try {
-            // Simulate API call (will be real API later)
-            await new Promise(resolve => setTimeout(resolve, 1000));
-
-            // Update user info in AuthContext
-            const updatedUser = {
-                ...user,
-                name: values.name,
-                email: values.email
-            };
-
-            updateUser(updatedUser);
-
-            // Show success message
+            // Call API to update user profile
+            const response = await authAPI.updateProfile({
+                name: values.name
+            });
+            // Update user info từ API response
+            updateUser(response.user);
             message.success('Profile updated successfully!');
 
             // Clear password fields after success
