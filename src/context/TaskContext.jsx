@@ -156,9 +156,17 @@ export const TaskProvider = ({ children }) => {
     }
   };
 
-  const deleteTask = (taskId) => {
-    dispatch({ type: TASK_ACTIONS.DELETE_TASK, payload: taskId });
-    message.success('Task deleted successfully');
+  const deleteTask = async (taskId) => {
+    try {
+      // Call API to delete task
+       await taskAPI.deleteTask(taskId);
+       // Dispatch action to remove task from state
+      dispatch({type: TASK_ACTIONS.DELETE_TASK, payload: taskId});
+      message.success('Task deleted successfully');
+    } catch (error) {
+      console.error(' Delete error:', error);
+      message.error('Failed to delete task: ' + (error.EM || error.message));
+    }
   };
 
   const setFilter = (filter) => {
