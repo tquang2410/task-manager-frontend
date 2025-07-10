@@ -79,7 +79,9 @@ const TasksPage = () => {
                     <Button
                         type="text"
                         icon={<EditOutlined />}
-                        onClick={() => openModal(record)}
+                        onClick={() => {
+                            openModal(record);
+                        }}
                         title="Edit task"
                     />
                     <Button

@@ -1,6 +1,7 @@
 import { createContext, useContext, useReducer, useEffect } from 'react';
 import { message } from 'antd';
 import { taskAPI } from '../utils/api';
+
 // Create context
 const TaskContext = createContext();
 
@@ -80,55 +81,6 @@ const taskReducer = (state, action) => {
   }
 };
 
-// Mock data for tasks
-// const mockTasks = [
-//   {
-//     id: 1,
-//     title: "Complete project proposal",
-//     description: "Write detailed project proposal for Q4",
-//     status: "pending",
-//     priority: "high",
-//     dueDate: "2024-07-15",
-//     createdAt: "2024-07-08"
-//   },
-//   {
-//     id: 2,
-//     title: "Review code changes",
-//     description: "Review pull requests from team members",
-//     status: "in-progress",
-//     priority: "medium",
-//     dueDate: "2024-07-10",
-//     createdAt: "2024-07-07"
-//   },
-//   {
-//     id: 3,
-//     title: "Update documentation",
-//     description: "Update API documentation for new endpoints",
-//     status: "pending",
-//     priority: "low",
-//     dueDate: "2024-07-20",
-//     createdAt: "2024-07-06"
-//   },
-//   {
-//     id: 4,
-//     title: "Fix responsive issues",
-//     description: "Fix mobile layout issues on dashboard",
-//     status: "completed",
-//     priority: "high",
-//     dueDate: "2024-07-05",
-//     createdAt: "2024-07-05"
-//   },
-//   {
-//     id: 5,
-//     title: "Setup testing environment",
-//     description: "Configure Jest and React Testing Library",
-//     status: "in-progress",
-//     priority: "medium",
-//     dueDate: "2024-07-12",
-//     createdAt: "2024-07-04"
-//   }
-// ];
-
 // TaskProvider component
 export const TaskProvider = ({ children }) => {
   const [state, dispatch] = useReducer(taskReducer, initialState);
@@ -139,15 +91,18 @@ export const TaskProvider = ({ children }) => {
   }, []);
 
   // Action creators (functions that dispatch actions)
-// In loadTasks(), add temporary console.log:
   const loadTasks = async () => {
     dispatch({ type: TASK_ACTIONS.SET_LOADING, payload: true });
 
     try {
       console.log(' Calling getTasks API...');
       const response = await taskAPI.getTasks();
-      console.log('📨 API Response:', response);
-      dispatch({ type: TASK_ACTIONS.SET_TASKS, payload: response.tasks });
+      console.log(' API Response:', response);
+      const transformedTasks = response.tasks.map(task => ({
+        ...task,
+        id: task._id
+      }));
+      dispatch({ type: TASK_ACTIONS.SET_TASKS, payload: transformedTasks});
     } catch (error) {
       console.log(' API Error:', error);
       message.error('Failed to load tasks');
@@ -156,23 +111,44 @@ export const TaskProvider = ({ children }) => {
     }
   };
 
-  const addTask = (taskData) => {
-    const newTask = {
-      id: Date.now(), // Simple ID generation
-      ...taskData,
-      createdAt: new Date().toISOString()
-    };
-
-    dispatch({ type: TASK_ACTIONS.ADD_TASK, payload: newTask });
-    message.success('Task created successfully');
+  const addTask = async (taskData) => {
+    try {
+      // Call API to create task
+      const response = await taskAPI.createTask(taskData);
+      // Dispatch action to add task to state
+      dispatch({
+        type: TASK_ACTIONS.ADD_TASK,
+        payload: response.task
+      });
+      message.success('Task created successfully');
+    } catch (error) {
+      console.error('Error adding task:', error);
+      message.error('Failed to create task' + (error.EM || error.message));
+    }
   };
 
-  const updateTask = (taskId, taskData) => {
-    dispatch({
-      type: TASK_ACTIONS.UPDATE_TASK,
-      payload: { id: taskId, data: taskData }
-    });
-    message.success('Task updated successfully');
+  const updateTask = async (taskId, taskData) => {
+    console.log('🔧 updateTask called with:');
+    console.log('   taskId:', taskId);
+    console.log('   taskId type:', typeof taskId);
+    console.log('   taskData:', taskData);
+    try {
+      console.log(' Updating task:', taskId, taskData);
+
+      const response = await taskAPI.updateTask(taskId, taskData);
+      console.log(' Update response:', response);
+
+      dispatch({
+        type: TASK_ACTIONS.UPDATE_TASK,
+        payload: { id: taskId, data: response.task }
+      });
+
+      message.success('Task updated successfully');
+
+    } catch (error) {
+      console.error(' Update error:', error);
+      message.error('Failed to update task: ' + (error.EM || error.message));
+    }
   };
 
   const deleteTask = (taskId) => {
