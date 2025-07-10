@@ -48,7 +48,7 @@ const taskReducer = (state, action) => {
     case TASK_ACTIONS.ADD_TASK:
       return {
         ...state,
-        tasks: [...state.tasks, action.payload]
+        tasks: [action.payload,...state.tasks]
       };
 
     case TASK_ACTIONS.UPDATE_TASK:
@@ -98,6 +98,7 @@ export const TaskProvider = ({ children }) => {
       console.log(' Calling getTasks API...');
       const response = await taskAPI.getTasks();
       console.log(' API Response:', response);
+      // Transform tasks to match expected format
       const transformedTasks = response.tasks.map(task => ({
         ...task,
         id: task._id
@@ -115,10 +116,14 @@ export const TaskProvider = ({ children }) => {
     try {
       // Call API to create task
       const response = await taskAPI.createTask(taskData);
+      const transformedTask = {
+        ...response.task,
+        id: response.task._id
+      };
       // Dispatch action to add task to state
       dispatch({
         type: TASK_ACTIONS.ADD_TASK,
-        payload: response.task
+        payload: transformedTask
       });
       message.success('Task created successfully');
     } catch (error) {
