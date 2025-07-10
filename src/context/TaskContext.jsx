@@ -1,7 +1,7 @@
 import { createContext, useContext, useReducer, useEffect } from 'react';
 import { message } from 'antd';
 import { taskAPI } from '../utils/api';
-
+import { useAuth } from './AuthContext';
 // Create context
 const TaskContext = createContext();
 
@@ -84,11 +84,17 @@ const taskReducer = (state, action) => {
 // TaskProvider component
 export const TaskProvider = ({ children }) => {
   const [state, dispatch] = useReducer(taskReducer, initialState);
-
+  const { isAuthenticated, user } = useAuth();
   // Load tasks when provider mounts
   useEffect(() => {
-    loadTasks();
-  }, []);
+    if (isAuthenticated && user) {
+      console.log('🔄 Auth state changed - loading tasks for user:', user.email);
+      loadTasks();
+    } else {
+      console.log('🚪 User logged out - clearing tasks');
+      dispatch({ type: TASK_ACTIONS.SET_TASKS, payload: [] });
+    }
+  }, [isAuthenticated, user?.email]);
 
   // Action creators (functions that dispatch actions)
   const loadTasks = async () => {
