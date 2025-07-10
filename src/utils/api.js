@@ -34,7 +34,7 @@ export const authAPI = {
     },
 };
 
-// Task APIs (for future use)
+// Task APIs
 export const taskAPI = {
     // Get all tasks for current user
     getTasks: async (filters = {}) => {
@@ -43,8 +43,8 @@ export const taskAPI = {
         return response;
     },
 
-    // Get single task
-    getTask: async (taskId) => {
+    // Get single task by ID
+    getTaskById: async (taskId) => {
         const response = await axiosInstance.get(`/v1/api/tasks/${taskId}`);
         return response;
     },
@@ -96,7 +96,7 @@ export const uploadAPI = {
     // Upload file (if needed for avatars, attachments, etc.)
     uploadFile: async (file, folder = 'general') => {
         const formData = new FormData();
-        formData.append('file', file);
+        formData.append('file', folder);
         formData.append('folder', folder);
 
         const response = await axiosInstance.post('/v1/api/upload', formData, {
@@ -109,7 +109,6 @@ export const uploadAPI = {
 };
 
 // Export all APIs as default
-
 export default {
     auth: authAPI,
     task: taskAPI,

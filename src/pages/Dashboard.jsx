@@ -1,11 +1,24 @@
 import { useAuth } from '../context/AuthContext';
+import { useTaskContext } from '../context/TaskContext';
 import {Card, Col, Row, Statistic} from "antd";
 import { List } from "antd";
 import { Button, Flex } from 'antd';
-import { mockDashboardData } from '../utils/mockAPI';
 const DashboardPage = () => {
     const { user } = useAuth();
-    const {stats, recentTasks} = mockDashboardData;
+    const { tasks } = useTaskContext();
+    
+    // Calculate stats from real tasks
+    const stats = {
+        total: tasks.length,
+        pending: tasks.filter(task => task.status === 'pending').length,
+        inProgress: tasks.filter(task => task.status === 'in-progress').length,
+        completed: tasks.filter(task => task.status === 'completed').length
+    };
+    
+    // Get recent tasks (latest 5)
+    const recentTasks = tasks
+        .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))
+        .slice(0, 5);
     return (
 
         <div className="page-container">

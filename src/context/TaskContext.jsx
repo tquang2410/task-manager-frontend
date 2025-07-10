@@ -1,6 +1,6 @@
 import { createContext, useContext, useReducer, useEffect } from 'react';
 import { message } from 'antd';
-
+import { taskAPI } from '../utils/api';
 // Create context
 const TaskContext = createContext();
 
@@ -41,6 +41,7 @@ const taskReducer = (state, action) => {
       return { ...state, loading: action.payload };
 
     case TASK_ACTIONS.SET_TASKS:
+      console.log('🔄 Reducer SET_TASKS:', action.payload);
       return { ...state, tasks: action.payload };
 
     case TASK_ACTIONS.ADD_TASK:
@@ -80,53 +81,53 @@ const taskReducer = (state, action) => {
 };
 
 // Mock data for tasks
-const mockTasks = [
-  {
-    id: 1,
-    title: "Complete project proposal",
-    description: "Write detailed project proposal for Q4",
-    status: "pending",
-    priority: "high",
-    dueDate: "2024-07-15",
-    createdAt: "2024-07-08"
-  },
-  {
-    id: 2,
-    title: "Review code changes",
-    description: "Review pull requests from team members",
-    status: "in-progress",
-    priority: "medium",
-    dueDate: "2024-07-10",
-    createdAt: "2024-07-07"
-  },
-  {
-    id: 3,
-    title: "Update documentation",
-    description: "Update API documentation for new endpoints",
-    status: "pending",
-    priority: "low",
-    dueDate: "2024-07-20",
-    createdAt: "2024-07-06"
-  },
-  {
-    id: 4,
-    title: "Fix responsive issues",
-    description: "Fix mobile layout issues on dashboard",
-    status: "completed",
-    priority: "high",
-    dueDate: "2024-07-05",
-    createdAt: "2024-07-05"
-  },
-  {
-    id: 5,
-    title: "Setup testing environment",
-    description: "Configure Jest and React Testing Library",
-    status: "in-progress",
-    priority: "medium",
-    dueDate: "2024-07-12",
-    createdAt: "2024-07-04"
-  }
-];
+// const mockTasks = [
+//   {
+//     id: 1,
+//     title: "Complete project proposal",
+//     description: "Write detailed project proposal for Q4",
+//     status: "pending",
+//     priority: "high",
+//     dueDate: "2024-07-15",
+//     createdAt: "2024-07-08"
+//   },
+//   {
+//     id: 2,
+//     title: "Review code changes",
+//     description: "Review pull requests from team members",
+//     status: "in-progress",
+//     priority: "medium",
+//     dueDate: "2024-07-10",
+//     createdAt: "2024-07-07"
+//   },
+//   {
+//     id: 3,
+//     title: "Update documentation",
+//     description: "Update API documentation for new endpoints",
+//     status: "pending",
+//     priority: "low",
+//     dueDate: "2024-07-20",
+//     createdAt: "2024-07-06"
+//   },
+//   {
+//     id: 4,
+//     title: "Fix responsive issues",
+//     description: "Fix mobile layout issues on dashboard",
+//     status: "completed",
+//     priority: "high",
+//     dueDate: "2024-07-05",
+//     createdAt: "2024-07-05"
+//   },
+//   {
+//     id: 5,
+//     title: "Setup testing environment",
+//     description: "Configure Jest and React Testing Library",
+//     status: "in-progress",
+//     priority: "medium",
+//     dueDate: "2024-07-12",
+//     createdAt: "2024-07-04"
+//   }
+// ];
 
 // TaskProvider component
 export const TaskProvider = ({ children }) => {
@@ -138,14 +139,21 @@ export const TaskProvider = ({ children }) => {
   }, []);
 
   // Action creators (functions that dispatch actions)
+// In loadTasks(), add temporary console.log:
   const loadTasks = async () => {
     dispatch({ type: TASK_ACTIONS.SET_LOADING, payload: true });
 
-    // Simulate API call delay
-    setTimeout(() => {
-      dispatch({ type: TASK_ACTIONS.SET_TASKS, payload: mockTasks });
+    try {
+      console.log(' Calling getTasks API...');
+      const response = await taskAPI.getTasks();
+      console.log('📨 API Response:', response);
+      dispatch({ type: TASK_ACTIONS.SET_TASKS, payload: response.tasks });
+    } catch (error) {
+      console.log(' API Error:', error);
+      message.error('Failed to load tasks');
+    } finally {
       dispatch({ type: TASK_ACTIONS.SET_LOADING, payload: false });
-    }, 1000);
+    }
   };
 
   const addTask = (taskData) => {
@@ -191,6 +199,8 @@ export const TaskProvider = ({ children }) => {
     if (state.filter === 'all') return true;
     return task.status === state.filter;
   });
+  console.log('📋 Current state.tasks:', state.tasks);
+  console.log('📋 Filtered tasks:', filteredTasks);
 
   const isEditMode = state.editingTask !== null;
 
