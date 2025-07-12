@@ -32,6 +32,13 @@ export const authAPI = {
         const response = await axiosInstance.put('/v1/api/account', userData);
         return response;
     },
+    updatePassword: async (oldPassword, newPassword) => {
+        const response = await axiosInstance.put('/v1/api/account/password', {
+            oldPassword,
+            newPassword,
+        });
+        return response;
+    },
 };
 
 // Task APIs

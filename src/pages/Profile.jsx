@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import {useEffect, useState} from 'react';
 import { Form, Input, Button, Card, message, Divider } from 'antd';
 import { UserOutlined, MailOutlined, LockOutlined } from '@ant-design/icons';
 import { useAuth } from '../context/AuthContext';
@@ -8,29 +8,60 @@ const ProfilePage = () => {
     const { user, updateUser } = useAuth();
     const [loading, setLoading] = useState(false);
     const [form] = Form.useForm();
-
+    // Load user profile data when component mounts
+    useEffect(() => {
+        const loadProfile = async () => {
+            try {
+                const response = await authAPI.getProfile();
+                form.setFieldsValue({
+                    name: response.user.name,
+                    email: response.user.email
+                });
+            } catch (error) {
+                message.error('Failed to load profile');
+            }
+        };
+        loadProfile();
+    }, []);
     // Handle form submission
     const handleSubmit = async (values) => {
+        console.log('🚀 Form submitted with values:', values);
+        console.log('🔍 Password fields check:');
+        console.log('   oldPassword:', values.oldPassword);
+        console.log('   newPassword:', values.newPassword);
+        console.log('   Should update password?', !!(values.oldPassword && values.newPassword));
+
         setLoading(true);
 
         try {
-            // Call API to update user profile
+            // Update profile
+            console.log('📝 Updating profile...');
             const response = await authAPI.updateProfile({
                 name: values.name
             });
-            // Update user info từ API response
             updateUser(response.user);
-            message.success('Profile updated successfully!');
 
-            // Clear password fields after success
-            form.setFieldsValue({
-                oldPassword: '',
-                newPassword: '',
-                confirmPassword: ''
-            });
+            // Check password update
+            if (values.oldPassword && values.newPassword) {
+                console.log('🔒 Calling updatePassword API...');
+                await authAPI.updatePassword(values.oldPassword, values.newPassword);
+                console.log('✅ Password updated successfully');
+
+                form.setFieldsValue({
+                    oldPassword: '',
+                    newPassword: '',
+                    confirmPassword: ''
+                });
+
+                message.success('Profile and password updated successfully!');
+            } else {
+                console.log('⚠️ Skipping password update - fields empty');
+                message.success('Profile updated successfully!');
+            }
 
         } catch (error) {
-            message.error('Failed to update profile. Please try again.');
+            console.error('❌ Error details:', error);
+            message.error(error.EM || 'Failed to update profile');
         } finally {
             setLoading(false);
         }
