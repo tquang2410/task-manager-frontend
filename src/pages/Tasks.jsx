@@ -1,7 +1,10 @@
-import { Button, Table, Space, Tag, Modal } from 'antd';
-import { PlusOutlined, EditOutlined, DeleteOutlined } from '@ant-design/icons';
+import React, { useState } from 'react';
+import { Button, Space, Modal } from 'antd';
+import { PlusOutlined } from '@ant-design/icons';
 import { useTaskContext } from '../context/TaskContext';
-import TaskModal from '../components/tasks/TaskModal'
+import TaskModal from '../components/tasks/TaskModal';
+import TaskList from '../components/tasks/TaskList';
+
 const TasksPage = () => {
     // Get state and actions from TaskContext
     const {
@@ -13,6 +16,22 @@ const TasksPage = () => {
         deleteTask,
     } = useTaskContext();
 
+    // Local pagination state
+    const [pagination, setPagination] = useState({
+        current: 1,
+        pageSize: 10,
+        total: filteredTasks.length,
+    });
+
+    // Update pagination total when filteredTasks change
+    React.useEffect(() => {
+        setPagination(prev => ({
+            ...prev,
+            total: filteredTasks.length,
+            current: 1, // Reset to page 1 when filter changes
+        }));
+    }, [filteredTasks.length]);
+
     // Handle delete with confirmation
     const handleDeleteTask = (taskId) => {
         Modal.confirm({
@@ -22,79 +41,14 @@ const TasksPage = () => {
         });
     };
 
-    // Table columns configuration
-    const columns = [
-        {
-            title: 'Title',
-            dataIndex: 'title',
-            key: 'title',
-            render: (title, record) => (
-                <div>
-                    <div style={{ fontWeight: 'bold' }}>{title}</div>
-                    {record.description && (
-                        <div style={{ fontSize: '12px', color: '#666', marginTop: '4px' }}>
-                            {record.description}
-                        </div>
-                    )}
-                </div>
-            ),
-        },
-        {
-            title: 'Status',
-            dataIndex: 'status',
-            key: 'status',
-            render: (status) => (
-                <Tag color={
-                    status === 'completed' ? 'green' :
-                        status === 'in-progress' ? 'blue' : 'orange'
-                }>
-                    {status.replace('-', ' ').toUpperCase()}
-                </Tag>
-            ),
-        },
-        {
-            title: 'Priority',
-            dataIndex: 'priority',
-            key: 'priority',
-            render: (priority) => (
-                <Tag color={
-                    priority === 'high' ? 'red' :
-                        priority === 'medium' ? 'orange' : 'default'
-                }>
-                    {priority.toUpperCase()}
-                </Tag>
-            ),
-        },
-        {
-            title: 'Due Date',
-            dataIndex: 'dueDate',
-            key: 'dueDate',
-            render: (date) => new Date(date).toLocaleDateString(),
-        },
-        {
-            title: 'Actions',
-            key: 'actions',
-            render: (_, record) => (
-                <Space size="middle">
-                    <Button
-                        type="text"
-                        icon={<EditOutlined />}
-                        onClick={() => {
-                            openModal(record);
-                        }}
-                        title="Edit task"
-                    />
-                    <Button
-                        type="text"
-                        danger
-                        icon={<DeleteOutlined />}
-                        onClick={() => handleDeleteTask(record.id)}
-                        title="Delete task"
-                    />
-                </Space>
-            ),
-        },
-    ];
+    // Handle pagination change
+    const handlePaginationChange = (page, size) => {
+        setPagination(prev => ({
+            ...prev,
+            current: page,
+            pageSize: size,
+        }));
+    };
 
     return (
         <div className="page-container">
@@ -137,30 +91,18 @@ const TasksPage = () => {
                 </Button>
             </Space>
 
-            {/* Tasks Table */}
-            <Table
-                columns={columns}
-                dataSource={filteredTasks}
+            {/* TaskList component with pagination */}
+            <TaskList
+                tasks={filteredTasks}
                 loading={loading}
-                rowKey="id"
-                pagination={{
-                    pageSize: 10,
-                    showSizeChanger: true,
-                    showQuickJumper: true,
-                    showTotal: (total, range) =>
-                        `${range[0]}-${range[1]} of ${total} tasks`
-                }}
-                locale={{
-                    emptyText: filter === 'all'
-                        ? 'No tasks yet. Create your first task!'
-                        : `No ${filter} tasks found.`
-                }}
+                onEdit={openModal}
+                onDelete={handleDeleteTask}
+                pagination={pagination}
+                onPaginationChange={handlePaginationChange}
             />
 
-            {/* TaskModal will be added next */}
+            {/* TaskModal */}
             <TaskModal />
-
-            {/* Footer */}
         </div>
     );
 };

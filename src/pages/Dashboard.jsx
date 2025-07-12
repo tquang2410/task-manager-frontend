@@ -52,7 +52,6 @@ const DashboardPage = () => {
             {/* TODO: Add recent tasks */}
             <List
                 header={<div>Header</div>}
-                footer={<div>Footer</div>}
                 bordered
                 dataSource={recentTasks}
                 renderItem={item => (
@@ -66,12 +65,7 @@ const DashboardPage = () => {
                     </List.Item>
                 )}
             />
-            {/* TODO: Add quick actions */}
-            <Flex gap="small" wrap>
-                <span>Quick Action: </span>
-                <Button type="primary">Create Task</Button>
-                <Button>View All Tasks</Button>
-            </Flex>
+
         </div>
     );
 };
