@@ -26,9 +26,13 @@ export const AuthProvider = ({ children }) => {
     if (token && userData) {
       try {
         const user = JSON.parse(userData);
+        console.log('🔄 AuthContext loading user from localStorage:', user);
         setAuth({
           isAuthenticated: true,
-          user,
+          user: {
+            ...user,
+            avatarId: user.avatarId || 1, // Default avatar ID if not set
+          },
           token,
           loading: false,
         });
@@ -83,13 +87,20 @@ export const AuthProvider = ({ children }) => {
   };
 
   const updateUser = (userData) => {
+    console.log('🔄 AuthContext updateUser called with:', userData);
+    
     // Update localStorage
     localStorage.setItem('userData', JSON.stringify(userData));
 
-    // Update state
+    // Update state - force new object reference to trigger re-render
     setAuth(prev => ({
       ...prev,
-      user: userData,
+      user: {
+        ...prev.user,
+        ...userData,
+        // Force new object reference
+        _updatedAt: Date.now()
+      },
     }));
   };
 

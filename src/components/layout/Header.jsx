@@ -1,15 +1,17 @@
 import React from 'react';
 import { Layout, Menu, Dropdown, Avatar, Button } from 'antd';
-import { UserOutlined, LogoutOutlined, MenuOutlined } from '@ant-design/icons';
+import { UserOutlined, LogoutOutlined } from '@ant-design/icons';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { useAuth } from '../../context/AuthContext';
-
+import { getAvatarById} from '../../utils/avatars';
 const { Header: AntHeader } = Layout;
 
 const Header = () => {
     const navigate = useNavigate();
     const location = useLocation();
     const { user, logout, isAuthenticated } = useAuth();
+    console.log('🔍 Header render - user avatarId:', user?.avatarId);
+    console.log('🔍 Header render - user object:', user);
     // Chỗ này xử lý click menu
     const handleMenuClick = (e) => {
         navigate(e.key); // Điều hướng đến trang tương ứng
@@ -75,8 +77,16 @@ const Header = () => {
                     <Dropdown menu={{ items: userMenuItems }}
                               placement="bottomRight">
                     <Button type="text">
-                        <Avatar size="small" icon={<UserOutlined/>} />
-                        <span style={{ marginLeft: 8 }}>{user?.name}</span>
+                        <Avatar size="small"
+                                key={user?.avatarId || 1}
+                                src={getAvatarById(user?.avatarId || 1).src}
+                        />
+                        <span style={{ marginLeft: 8, color: 'white' }}>
+                            {user?.name && user.name.length > 10 
+                                ? `${user.name.substring(0, 10)}...` 
+                                : user?.name
+                            }
+                        </span>
                     </Button>
                     </Dropdown>
                 </div>

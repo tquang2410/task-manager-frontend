@@ -3,11 +3,13 @@ import { Form, Input, Button, Divider, message } from 'antd';
 import { UserOutlined, MailOutlined, LockOutlined } from '@ant-design/icons';
 import { useAuth } from '../../context/AuthContext';
 import { authAPI } from '../../utils/api';
+import {AVATARS, getAvatarById} from "../../utils/avatars.js";
 import PropTypes from 'prop-types';
 
 const ProfileForm = ({ onSuccess }) => {
     const { user, updateUser } = useAuth();
     const [loading, setLoading] = useState(false);
+    const [selectedAvatar, setSelectedAvatar] = useState(1);
     const [form] = Form.useForm();
 
     // Load profile data when component mounts
@@ -15,6 +17,7 @@ const ProfileForm = ({ onSuccess }) => {
         const loadProfile = async () => {
             try {
                 const response = await authAPI.getProfile();
+                setSelectedAvatar(response.user.avatarId || 1);
                 form.setFieldsValue({
                     name: response.user.name,
                     email: response.user.email
@@ -31,7 +34,8 @@ const ProfileForm = ({ onSuccess }) => {
         try {
             // Update profile
             const response = await authAPI.updateProfile({
-                name: values.name
+                name: values.name,
+                avatarId: selectedAvatar
             });
             updateUser(response.user);
 
@@ -102,7 +106,35 @@ const ProfileForm = ({ onSuccess }) => {
                     placeholder="Enter your email"
                 />
             </Form.Item>
-
+            {/* Avatar Selection */}
+            <Form.Item label="Avatar">
+                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(5, 1fr)', gap: '10px', marginTop: '10px' }}>
+                    {AVATARS.map(avatar => (
+                        <div
+                            key={avatar.id}
+                            onClick={() => setSelectedAvatar(avatar.id)}
+                            style={{
+                                padding: '8px',
+                                border: selectedAvatar === avatar.id ? '3px solid #1890ff' : '2px solid #d9d9d9',
+                                borderRadius: '8px',
+                                cursor: 'pointer',
+                                textAlign: 'center',
+                                backgroundColor: selectedAvatar === avatar.id ? '#f0f8ff' : 'white',
+                                transition: 'all 0.2s'
+                            }}
+                        >
+                            <img
+                                src={avatar.src}
+                                alt={avatar.name}
+                                style={{ width: '40px', height: '40px', borderRadius: '50%' }}
+                            />
+                            <div style={{ fontSize: '12px', marginTop: '4px', color: '#666' }}>
+                                {avatar.name}
+                            </div>
+                        </div>
+                    ))}
+                </div>
+            </Form.Item>
             <Divider />
 
             {/* Password Change Section */}

@@ -55,6 +55,7 @@ const TasksPage = () => {
             <div className="page-header">
                 <h1 className="page-title">Tasks Management</h1>
                 <Button
+                    style={{ marginTop: 16 }}
                     type="primary"
                     icon={<PlusOutlined />}
                     onClick={() => openModal()} // null = add mode

@@ -22,7 +22,7 @@ const DashboardPage = () => {
     return (
 
         <div className="page-container">
-            <h1>Welcome back, {user?.name}!</h1>
+            <h1 className="page-title">Welcome back,<span className="user-name">{user?.name}!</span></h1>
             {/* TODO: Add stats card */}
             <Row gutter={16}>
                     <Col span={6}>

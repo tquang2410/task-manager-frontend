@@ -31,7 +31,7 @@ body {
 
 .app-content {
   flex: 1;
-  padding: 20px;
+  padding: 1.25rem;
   background-color: #f5f5f5;
 }
 
@@ -91,11 +91,14 @@ body {
 
 /* Page container */
 .page-container {
-  max-width: 1200px;
+  max-width: 1000px;
   margin: 0 auto;
   padding: 0 20px;
 }
-
+.page-container .ant-card {
+  padding: 16px;
+  margin-bottom: 16px;
+}
 .page-header {
   margin-bottom: 24px;
   padding-bottom: 16px;
@@ -105,10 +108,23 @@ body {
 .page-title {
   font-size: 24px;
   font-weight: 600;
-  color: #333;
-  margin: 0;
+  color: rgb(200, 103, 0);
 }
+.page-title::before {
+  content: "📋";
+  margin-right: 8px;
 
+}
+.status-pending::after {
+  content: " ⏳";
+}
+.user-name {
+  color: #1890ff;          /* Ant Design primary color */
+  font-weight: 600;        /* Slightly bolder */
+  background: linear-gradient(45deg, #1890ff, #40a9ff);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent; /* Gradient text effect */
+}
 /* Card styles */
 .card {
   background: white;
@@ -117,12 +133,14 @@ body {
   padding: 24px;
   margin-bottom: 16px;
 }
-
 /* Button styles */
 .btn-full-width {
   width: 100%;
+  margin: 8px 0 !important;
 }
-
+.ant-btn {
+  margin: 4px !important;
+}
 /* Loading spinner */
 .loading-container {
   display: flex;
@@ -130,19 +148,59 @@ body {
   align-items: center;
   min-height: 200px;
 }
+/* Responsive - Mobile First */
+/* Base styles (Mobile) */
+.app-content {
+  padding: 0.75rem;
+}
 
-/* Responsive */
-@media (max-width: 768px) {
+.page-container {
+  padding: 0 12px;
+}
+
+.auth-box {
+  padding: 20px;
+}
+
+.header-container {
+  padding: 0 12px;
+}
+
+/* Tablet */
+@media (min-width: 481px) {
   .app-content {
-    padding: 16px;
-  }
-
-  .auth-box {
-    padding: 30px 20px;
+    padding: 1rem;
   }
 
   .page-container {
     padding: 0 16px;
+  }
+
+  .auth-box {
+    padding: 30px;
+  }
+
+  .header-container {
+    padding: 0 16px;
+  }
+}
+
+/* Desktop */
+@media (min-width: 769px) {
+  .app-content {
+    padding: 1.25rem;
+  }
+
+  .page-container {
+    padding: 0 20px;
+  }
+
+  .auth-box {
+    padding: 40px;
+  }
+
+  .header-container {
+    padding: 0 24px;
   }
 }
 
@@ -203,3 +261,4 @@ body {
   border: none;
   box-shadow: none;
 }
+

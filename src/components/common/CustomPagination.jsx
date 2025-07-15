@@ -78,9 +78,9 @@ const CustomPagination = ({ current, pageSize, total, onChange }) => {
             display: 'flex',
             justifyContent: 'space-between',
             alignItems: 'center',
-            marginTop: 16,
-            padding: '16px 0',
-            borderTop: '1px solid #f0f0f0'
+            padding: '16px',
+            flexWrap: 'wrap',
+            gap: '8px'
         }}>
             {/* Left: Page info */}
             <div style={{ color: '#666' }}>
