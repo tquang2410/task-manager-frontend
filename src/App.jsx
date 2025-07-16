@@ -1,7 +1,8 @@
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import { ConfigProvider } from 'antd';
 import { AuthProvider } from './context/AuthContext';
-import './styles/global.css';
+// import './styles/main.css'
+import './styles/global.css'
 
 // Import pages
 import DashboardPage from './pages/Dashboard';

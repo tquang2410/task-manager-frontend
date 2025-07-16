@@ -74,21 +74,14 @@ const CustomPagination = ({ current, pageSize, total, onChange }) => {
     if (total === 0) return null;
 
     return (
-        <div style={{
-            display: 'flex',
-            justifyContent: 'space-between',
-            alignItems: 'center',
-            padding: '16px',
-            flexWrap: 'wrap',
-            gap: '8px'
-        }}>
+        <div className="custom-pagination">
             {/* Left: Page info */}
             <div style={{ color: '#666' }}>
                 Showing {startIndex}-{endIndex} of {total} tasks
             </div>
 
             {/* Center: Page navigation */}
-            <Space>
+            <Space className="custom-pagination-controls" >
                 {/* Previous button */}
                 <Button
                     icon={<LeftOutlined />}
@@ -126,10 +119,9 @@ const CustomPagination = ({ current, pageSize, total, onChange }) => {
             {/* Right: Page size selector & jump */}
             <Space>
                 {/* Page size selector */}
-                <Select
+                <Select className="custom-pagination-right"
                     value={pageSize}
                     onChange={handlePageSizeChange}
-                    style={{ width: 100 }}
                 >
                     <Select.Option value={10}>10/page</Select.Option>
                     <Select.Option value={20}>20/page</Select.Option>
@@ -138,15 +130,17 @@ const CustomPagination = ({ current, pageSize, total, onChange }) => {
                 </Select>
 
                 {/* Jump to page */}
-                <span>Go to</span>
-                <Input
-                    style={{ width: 60 }}
-                    value={jumpPage}
-                    onChange={(e) => setJumpPage(e.target.value)}
-                    onPressEnter={handleJumpPage}
-                    placeholder="Page"
-                />
-                <Button onClick={handleJumpPage}>Go</Button>
+        <div className="pagination-jump">
+            <span>Go to</span>
+            <Input
+                style={{ width: 60 }}
+                value={jumpPage}
+                onChange={(e) => setJumpPage(e.target.value)}
+                onPressEnter={handleJumpPage}
+                placeholder="Page"
+            />
+            <Button onClick={handleJumpPage}>Go</Button>
+        </div>
             </Space>
         </div>
     );

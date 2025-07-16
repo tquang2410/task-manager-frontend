@@ -1,0 +1,71 @@
+/* ================================
+   CSS CUSTOM PROPERTIES (CSS Variables)
+   ================================ */
+
+:root {
+    /* ===== BREAKPOINTS ===== */
+    --bp-xs: 320px;   /* Mobile portrait */
+    --bp-sm: 576px;   /* Mobile landscape */
+    --bp-md: 768px;   /* Tablet portrait */
+    --bp-lg: 992px;   /* Tablet landscape */
+    --bp-xl: 1200px;  /* Desktop */
+    --bp-xxl: 1400px; /* Large desktop */
+
+    /* ===== COLORS ===== */
+    /* Primary Colors */
+    --color-primary: #1890ff;
+    --color-primary-hover: #40a9ff;
+    --color-primary-active: #096dd9;
+
+    /* Status Colors */
+    --color-success: #52c41a;
+    --color-warning: #faad14;
+    --color-error: #ff4d4f;
+    --color-info: #1890ff;
+
+    /* Neutral Colors */
+    --color-white: #ffffff;
+    --color-gray-50: #fafafa;
+    --color-gray-100: #f5f5f5;
+    --color-gray-200: #f0f0f0;
+    --color-gray-300: #d9d9d9;
+    --color-gray-400: #bfbfbf;
+    --color-gray-500: #8c8c8c;
+    --color-gray-600: #595959;
+    --color-gray-700: #434343;
+    --color-gray-800: #262626;
+    --color-gray-900: #1f1f1f;
+    --color-black: #000000;
+
+    /* ===== SPACING ===== */
+    --spacing-xs: 4px;
+    --spacing-sm: 8px;
+    --spacing-md: 16px;
+    --spacing-lg: 24px;
+    --spacing-xl: 32px;
+    --spacing-xxl: 48px;
+
+    /* ===== TYPOGRAPHY ===== */
+    /* Font Sizes - Responsive using clamp() */
+    --font-size-xs: clamp(0.75rem, 1.5vw, 0.875rem);   /* 12px -> 14px */
+    --font-size-sm: clamp(0.875rem, 2vw, 1rem);        /* 14px -> 16px */
+    --font-size-base: clamp(1rem, 2.5vw, 1.125rem);    /* 16px -> 18px */
+    --font-size-lg: clamp(1.125rem, 3vw, 1.25rem);     /* 18px -> 20px */
+    --font-size-xl: clamp(1.25rem, 4vw, 1.5rem);       /* 20px -> 24px */
+    --font-size-xxl: clamp(1.5rem, 5vw, 2rem);         /* 24px -> 32px */
+
+    /* ===== BORDERS & SHADOWS ===== */
+    --border-radius-sm: 4px;
+    --border-radius-base: 6px;
+    --border-radius-lg: 8px;
+    --border-radius-xl: 12px;
+
+    --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.04);
+    --shadow-base: 0 2px 8px rgba(0, 0, 0, 0.06);
+    --shadow-lg: 0 4px 12px rgba(0, 0, 0, 0.08);
+
+    /* ===== TRANSITIONS ===== */
+    --transition-fast: 0.15s ease-in-out;
+    --transition-base: 0.2s ease-in-out;
+    --transition-slow: 0.3s ease-in-out;
+}

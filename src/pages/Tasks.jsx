@@ -64,33 +64,35 @@ const TasksPage = () => {
                 </Button>
             </div>
 
-            {/* Filter Buttons */}
-            <Space style={{ marginBottom: 16 }}>
-                <Button
-                    type={filter === 'all' ? 'primary' : 'default'}
-                    onClick={() => setFilter('all')}
-                >
-                    All ({filteredTasks.length})
-                </Button>
-                <Button
-                    type={filter === 'pending' ? 'primary' : 'default'}
-                    onClick={() => setFilter('pending')}
-                >
-                    Pending
-                </Button>
-                <Button
-                    type={filter === 'in-progress' ? 'primary' : 'default'}
-                    onClick={() => setFilter('in-progress')}
-                >
-                    In Progress
-                </Button>
-                <Button
-                    type={filter === 'completed' ? 'primary' : 'default'}
-                    onClick={() => setFilter('completed')}
-                >
-                    Completed
-                </Button>
-            </Space>
+            <div className="filter-buttons">
+                {/* Filter Buttons */}
+                <Space style={{ marginBottom: 16 }}>
+                    <Button
+                        type={filter === 'all' ? 'primary' : 'default'}
+                        onClick={() => setFilter('all')}
+                    >
+                        All ({filteredTasks.length})
+                    </Button>
+                    <Button
+                        type={filter === 'pending' ? 'primary' : 'default'}
+                        onClick={() => setFilter('pending')}
+                    >
+                        Pending
+                    </Button>
+                    <Button
+                        type={filter === 'in-progress' ? 'primary' : 'default'}
+                        onClick={() => setFilter('in-progress')}
+                    >
+                        In Progress
+                    </Button>
+                    <Button
+                        type={filter === 'completed' ? 'primary' : 'default'}
+                        onClick={() => setFilter('completed')}
+                    >
+                        Completed
+                    </Button>
+                </Space>
+            </div>
 
             {/* TaskList component with pagination */}
             <TaskList

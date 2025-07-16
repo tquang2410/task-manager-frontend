@@ -2,7 +2,7 @@ import { useAuth } from '../context/AuthContext';
 import { useTaskContext } from '../context/TaskContext';
 import {Card, Col, Row, Statistic} from "antd";
 import { List } from "antd";
-import { Button, Flex } from 'antd';
+
 const DashboardPage = () => {
     const { user } = useAuth();
     const { tasks } = useTaskContext();
@@ -22,7 +22,7 @@ const DashboardPage = () => {
     return (
 
         <div className="page-container">
-            <h1 className="page-title">Welcome back,<span className="user-name">{user?.name}!</span></h1>
+            <h1 className="page-title text-xl p-md">Welcome back,<span className="user-name">{user?.name}!</span></h1>
             {/* TODO: Add stats card */}
             <Row gutter={16}>
                     <Col span={6}>
@@ -51,7 +51,9 @@ const DashboardPage = () => {
             </Row>
             {/* TODO: Add recent tasks */}
             <List
-                header={<div>Header</div>}
+                header={
+                <div className="page-title">Recently</div>
+            }
                 bordered
                 dataSource={recentTasks}
                 renderItem={item => (

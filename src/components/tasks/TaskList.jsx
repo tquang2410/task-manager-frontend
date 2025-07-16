@@ -22,6 +22,9 @@ const TaskList = ({ tasks, loading, onEdit, onDelete, pagination, onPaginationCh
                     )}
                 </div>
             ),
+            onCell: () => ({
+                'data-label': 'Title'
+            }),
         },
         {
             title: 'Status',
@@ -35,6 +38,9 @@ const TaskList = ({ tasks, loading, onEdit, onDelete, pagination, onPaginationCh
                     {status.replace('-', ' ').toUpperCase()}
                 </Tag>
             ),
+            onCell: () => ({
+                'data-label': 'Status'
+            }),
         },
         {
             title: 'Priority',
@@ -48,12 +54,18 @@ const TaskList = ({ tasks, loading, onEdit, onDelete, pagination, onPaginationCh
                     {priority.toUpperCase()}
                 </Tag>
             ),
+            onCell: () => ({
+                'data-label': 'Priority'
+            }),
         },
         {
             title: 'Due Date',
             dataIndex: 'dueDate',
             key: 'dueDate',
             render: (date) => new Date(date).toLocaleDateString(),
+            onCell: () => ({
+                'data-label': 'Due Date'
+            }),
         },
         {
             title: 'Actions',
@@ -75,6 +87,9 @@ const TaskList = ({ tasks, loading, onEdit, onDelete, pagination, onPaginationCh
                     />
                 </Space>
             ),
+            onCell: () => ({
+                'data-label': 'Actions'
+            }),
         },
     ];
 

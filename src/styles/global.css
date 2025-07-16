@@ -1,4 +1,38 @@
-/* Global styles */
+/* ================================
+   CSS VARIABLES - Added for Phase 1
+   ================================ */
+
+:root {
+  /* Breakpoints */
+  --bp-mobile: 768px;
+  --bp-tablet: 992px;
+  --bp-desktop: 1200px;
+
+  /* Colors */
+  --color-primary: #1890ff;
+  --color-success: #52c41a;
+  --color-warning: #faad14;
+  --color-error: #ff4d4f;
+
+  /* Spacing */
+  --spacing-xs: 8px;
+  --spacing-sm: 12px;
+  --spacing-md: 16px;
+  --spacing-lg: 24px;
+  --spacing-xl: 32px;
+
+  /* Typography */
+  --font-size-sm: clamp(0.875rem, 2vw, 1rem);
+  --font-size-base: clamp(1rem, 2.5vw, 1.125rem);
+  --font-size-lg: clamp(1.125rem, 3vw, 1.25rem);
+}
+
+/* ================================
+   EXISTING CSS (keep unchanged)
+   ================================ */
+/* ================================
+   RESET & BASE STYLES
+   ================================ */
 * {
   margin: 0;
   padding: 0;
@@ -15,7 +49,9 @@ body {
   line-height: 1.6;
 }
 
-/* App layout */
+/* ================================
+   APP LAYOUT - FLUID RESPONSIVE
+   ================================ */
 .app {
   min-height: 100vh;
   display: flex;
@@ -31,11 +67,13 @@ body {
 
 .app-content {
   flex: 1;
-  padding: 1.25rem;
+  padding: clamp(0.5rem, 3vw, 1.25rem); /* 8px -> 20px auto */
   background-color: #f5f5f5;
 }
 
-/* Header styles */
+/* ================================
+   HEADER STYLES - FLUID RESPONSIVE
+   ================================ */
 .app-header {
   background: #001529 !important;
   border-bottom: 1px solid #f0f0f0;
@@ -43,11 +81,54 @@ body {
   position: sticky;
   top: 0;
   z-index: 1000;
-  width: 100% !important; /* Force full width */
-  padding: 0 !important;  /* Remove default padding */
+  width: 100% !important;
+  padding: 0 !important;
 }
 
-/* Auth pages layout */
+.header-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: clamp(50px, 8vh, 64px); /* Auto height scaling */
+  padding: 0 clamp(0.5rem, 3vw, 1.5rem); /* 8px -> 24px auto */
+  max-width: 100%;
+  width: 100%;
+}
+
+.header-logo {
+  color: white;
+  font-size: clamp(14px, 4vw, 20px); /* 14px -> 20px auto */
+  font-weight: bold;
+  white-space: nowrap;
+}
+
+.header-menu {
+  flex: 1;
+  justify-content: center;
+  border-bottom: none !important;
+}
+
+.header-user {
+  color: white;
+  display: flex;
+  align-items: center;
+}
+
+.header-user .ant-btn {
+  border: none;
+  box-shadow: none;
+  font-size: clamp(0.75rem, 2vw, 0.875rem) !important;
+  padding: clamp(4px, 1vw, 8px) clamp(6px, 2vw, 12px) !important;
+}
+
+/* Hide username on very small screens */
+.header-user span {
+  display: block;
+}
+
+/* ================================
+   AUTH PAGES - FLUID RESPONSIVE
+   ================================ */
 .auth-container {
   width: 100vw;
   min-height: 100vh;
@@ -55,15 +136,15 @@ body {
   align-items: center;
   justify-content: center;
   background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-  padding: 20px;
+  padding: clamp(1rem, 5vw, 2rem);
 }
 
 .auth-box {
   background: white;
-  padding: 40px;
+  padding: clamp(1rem, 5vw, 2.5rem); /* 16px -> 40px auto */
   border-radius: 12px;
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-  width: 100%;
+  width: min(90vw, 400px); /* Fluid width */
   max-width: 400px;
 }
 
@@ -71,7 +152,7 @@ body {
   text-align: center;
   margin-bottom: 30px;
   color: #333;
-  font-size: 24px;
+  font-size: clamp(1.25rem, 5vw, 1.5rem); /* 20px -> 24px auto */
   font-weight: 600;
 }
 
@@ -89,16 +170,20 @@ body {
   text-decoration: underline;
 }
 
-/* Page container */
+/* ================================
+   PAGE LAYOUT - FLUID RESPONSIVE
+   ================================ */
 .page-container {
-  max-width: 1000px;
+  max-width: min(90vw, 1200px); /* Fluid container */
   margin: 0 auto;
-  padding: 0 20px;
+  padding: 0 clamp(0.75rem, 4vw, 1.5rem); /* 12px -> 24px auto */
 }
+
 .page-container .ant-card {
-  padding: 16px;
+  padding: clamp(1rem, 3vw, 1.5rem); /* 16px -> 24px auto */
   margin-bottom: 16px;
 }
+
 .page-header {
   margin-bottom: 24px;
   padding-bottom: 16px;
@@ -106,105 +191,136 @@ body {
 }
 
 .page-title {
-  font-size: 24px;
+  font-size: clamp(1.125rem, 4vw, 1.5rem); /* 18px -> 24px auto */
   font-weight: 600;
   color: rgb(200, 103, 0);
+  word-wrap: break-word;
 }
+
 .page-title::before {
   content: "📋";
   margin-right: 8px;
+}
 
-}
-.status-pending::after {
-  content: " ⏳";
-}
-.user-name {
-  color: #1890ff;          /* Ant Design primary color */
-  font-weight: 600;        /* Slightly bolder */
-  background: linear-gradient(45deg, #1890ff, #40a9ff);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent; /* Gradient text effect */
-}
-/* Card styles */
+/* ================================
+   COMPONENTS - FLUID RESPONSIVE
+   ================================ */
+/* Cards */
 .card {
   background: white;
   border-radius: 8px;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
-  padding: 24px;
+  padding: clamp(1rem, 4vw, 1.5rem); /* 16px -> 24px auto */
   margin-bottom: 16px;
 }
-/* Button styles */
+
+/* Buttons */
 .btn-full-width {
   width: 100%;
   margin: 8px 0 !important;
 }
+
 .ant-btn {
   margin: 4px !important;
+  font-size: clamp(0.75rem, 2vw, 0.875rem) !important; /* 12px -> 14px auto */
+  padding: clamp(4px, 1vw, 8px) clamp(6px, 2vw, 16px) !important;
+  min-height: clamp(32px, 6vw, 40px); /* Touch-friendly auto */
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
-/* Loading spinner */
+
+.filter-buttons {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: clamp(4px, 1vw, 12px); /* 4px -> 12px auto */
+}
+
+/* Loading */
 .loading-container {
   display: flex;
   justify-content: center;
   align-items: center;
   min-height: 200px;
 }
-/* Responsive - Mobile First */
-/* Base styles (Mobile) */
-.app-content {
-  padding: 0.75rem;
+
+/* Custom Elements */
+.status-pending::after {
+  content: " ⏳";
 }
 
-.page-container {
-  padding: 0 12px;
+.user-name {
+  color: #1890ff;
+  font-weight: 600;
+  background: linear-gradient(45deg, #1890ff, #40a9ff);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
 }
 
-.auth-box {
-  padding: 20px;
+/* ================================
+   TABLE - FLUID RESPONSIVE
+   ================================ */
+.ant-table {
+  font-size: clamp(0.75rem, 2vw, 1rem); /* 12px -> 16px auto */
 }
 
-.header-container {
-  padding: 0 12px;
+.ant-table-tbody > tr > td {
+  padding: clamp(4px, 1vw, 12px) clamp(8px, 2vw, 16px) !important;
 }
 
-/* Tablet */
-@media (min-width: 481px) {
-  .app-content {
-    padding: 1rem;
-  }
-
-  .page-container {
-    padding: 0 16px;
-  }
-
-  .auth-box {
-    padding: 30px;
-  }
-
-  .header-container {
-    padding: 0 16px;
-  }
+.ant-table-tbody > tr > td:first-child div {
+  max-width: clamp(120px, 30vw, 300px); /* Fluid column width */
+  word-wrap: break-word;
 }
 
-/* Desktop */
-@media (min-width: 769px) {
-  .app-content {
-    padding: 1.25rem;
-  }
-
-  .page-container {
-    padding: 0 20px;
-  }
-
-  .auth-box {
-    padding: 40px;
-  }
-
-  .header-container {
-    padding: 0 24px;
-  }
+/* Auto-hide columns based on screen width */
+.ant-table-thead > tr > th:nth-child(3), /* Priority column */
+.ant-table-tbody > tr > td:nth-child(3) {
+  display: clamp(0, 100vw - 600px, 1); /* Hide when < 600px */
 }
 
-/* Utilities */
+.ant-table-thead > tr > th:nth-child(4), /* Due Date column */
+.ant-table-tbody > tr > td:nth-child(4) {
+  display: clamp(0, 100vw - 768px, 1); /* Hide when < 768px */
+}
+
+/* ================================
+   PAGINATION - FLUID RESPONSIVE
+   ================================ */
+.custom-pagination {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  gap: clamp(8px, 2vw, 16px); /* Auto spacing */
+  margin-top: 16px;
+  padding: clamp(8px, 2vw, 16px) 0;
+  border-top: 1px solid #f0f0f0;
+}
+
+.custom-pagination-controls {
+  display: flex;
+  flex-wrap: wrap;
+  gap: clamp(4px, 1vw, 8px);
+  justify-content: center;
+}
+
+.custom-pagination-right {
+  display: flex;
+  flex-wrap: wrap;
+  gap: clamp(4px, 1vw, 8px);
+  align-items: center;
+}
+
+/* Auto-hide pagination "Go to" on small screens */
+.pagination-jump {
+  display: clamp(0, 100vw - 480px, 1); /* Hide when < 480px */
+}
+
+/* ================================
+   UTILITY CLASSES
+   ================================ */
 .text-center {
   text-align: center;
 }
@@ -228,37 +344,3 @@ body {
 .align-center {
   align-items: center;
 }
-
-/* Header specific styles */
-.header-container {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  height: 64px;
-  padding: 0 24px;
-  max-width: 100%;
-  width: 100%;
-}
-
-.header-logo {
-  color: white;
-  font-size: 20px;
-  font-weight: bold;
-  white-space: nowrap;
-}
-.header-menu {
-  flex: 1;
-  justify-content: center;
-  border-bottom: none !important;
-}
-
-
-.header-user {
-  color: white;
-}
-
-.header-user .ant-btn {
-  border: none;
-  box-shadow: none;
-}
-
