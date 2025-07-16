@@ -101,10 +101,6 @@ const TaskList = ({ tasks, loading, onEdit, onDelete, pagination, onPaginationCh
     const endIndex = startIndex + pageSize;
     const paginatedTasks = tasks.slice(startIndex, endIndex);
 
-    console.log('🔍 Pagination:', { current, pageSize, total });
-    console.log('🔍 Showing tasks:', startIndex, 'to', endIndex);
-    console.log('🔍 Paginated tasks length:', paginatedTasks.length);
-
     return (
         <div className={styles.taskList}>
             <Table

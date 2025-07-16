@@ -1,0 +1,32 @@
+/* ================================
+   PAGE LAYOUT COMPONENT STYLES
+   ================================ */
+
+.pageContainer {
+    max-width: min(90vw, 1200px);
+    margin: 0 auto;
+    padding: 0 clamp(0.75rem, 4vw, 1.5rem);
+}
+
+.pageContainer .ant-card {
+    padding: clamp(1rem, 3vw, 1.5rem);
+    margin-bottom: 16px;
+}
+
+.pageHeader {
+    margin-bottom: 24px;
+    padding-bottom: 16px;
+    border-bottom: 1px solid #f0f0f0;
+}
+
+.pageTitle {
+    font-size: clamp(1.125rem, 4vw, 1.5rem);
+    font-weight: 600;
+    color: rgb(200, 103, 0);
+    word-wrap: break-word;
+}
+
+.pageTitle::before {
+    content: "📋";
+    margin-right: 8px;
+}

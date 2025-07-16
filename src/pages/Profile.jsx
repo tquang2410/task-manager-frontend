@@ -1,16 +1,15 @@
 import { Card } from 'antd';
 import ProfileForm from '../components/auth/ProfileForm';
-
+import styles from '../styles/components/PageLayout.module.css'
 const ProfilePage = () => {
     const handleProfileSuccess = () => {
-        // Optional: Add any page-level logic after successful update
         console.log('Profile updated successfully!');
     };
 
     return (
-        <div className="page-container">
-            <div className="page-header">
-                <h1 className="page-title">Profile Settings</h1>
+        <div className={styles.pageContainer}>
+            <div className={styles.pageHeader}>
+                <h1 className={styles.pageTitle}>Profile Settings</h1>
                 <p>Update your personal information and password</p>
             </div>
 

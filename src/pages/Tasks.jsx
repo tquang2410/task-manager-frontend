@@ -4,7 +4,7 @@ import { PlusOutlined } from '@ant-design/icons';
 import { useTaskContext } from '../context/TaskContext';
 import TaskModal from '../components/tasks/TaskModal';
 import TaskList from '../components/tasks/TaskList';
-
+import styles from '../styles/components/PageLayout.module.css'
 const TasksPage = () => {
     // Get state and actions from TaskContext
     const {
@@ -51,9 +51,9 @@ const TasksPage = () => {
     };
 
     return (
-        <div className="page-container">
-            <div className="page-header">
-                <h1 className="page-title">Tasks Management</h1>
+        <div className={styles.pageContainer}>
+            <div className={styles.pageHeader}>
+                <h1 className={styles.pageTitle}>Tasks Management</h1>
                 <Button
                     style={{ marginTop: 16 }}
                     type="primary"

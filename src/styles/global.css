@@ -73,136 +73,15 @@ body {
   background-color: #f5f5f5;
 }
 
-/* ================================
-   HEADER STYLES - FLUID RESPONSIVE
-   ================================ */
-.app-header {
-  background: #001529 !important;
-  border-bottom: 1px solid #f0f0f0;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
-  position: sticky;
-  top: 0;
-  z-index: 1000;
-  width: 100% !important;
-  padding: 0 !important;
-}
-
-.header-container {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  height: clamp(50px, 8vh, 64px); /* Auto height scaling */
-  padding: 0 clamp(0.5rem, 3vw, 1.5rem); /* 8px -> 24px auto */
-  max-width: 100%;
-  width: 100%;
-}
-
-.header-logo {
-  color: white;
-  font-size: clamp(14px, 4vw, 20px); /* 14px -> 20px auto */
-  font-weight: bold;
-  white-space: nowrap;
-}
-
-.header-menu {
-  flex: 1;
-  justify-content: center;
-  border-bottom: none !important;
-}
-
-.header-user {
-  color: white;
-  display: flex;
-  align-items: center;
-}
-
-.header-user .ant-btn {
-  border: none;
-  box-shadow: none;
-  font-size: clamp(0.75rem, 2vw, 0.875rem) !important;
-  padding: clamp(4px, 1vw, 8px) clamp(6px, 2vw, 12px) !important;
-}
-
-/* Hide username on very small screens */
-.header-user span {
-  display: block;
-}
 
 /* ================================
    AUTH PAGES - FLUID RESPONSIVE
    ================================ */
-.auth-container {
-  width: 100vw;
-  min-height: 100vh;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-  padding: clamp(1rem, 5vw, 2rem);
-}
 
-.auth-box {
-  background: white;
-  padding: clamp(1rem, 5vw, 2.5rem); /* 16px -> 40px auto */
-  border-radius: 12px;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-  width: min(90vw, 400px); /* Fluid width */
-  max-width: 400px;
-}
-
-.auth-title {
-  text-align: center;
-  margin-bottom: 30px;
-  color: #333;
-  font-size: clamp(1.25rem, 5vw, 1.5rem); /* 20px -> 24px auto */
-  font-weight: 600;
-}
-
-.auth-footer {
-  text-align: center;
-  margin-top: 20px;
-}
-
-.auth-footer a {
-  color: #1890ff;
-  text-decoration: none;
-}
-
-.auth-footer a:hover {
-  text-decoration: underline;
-}
 
 /* ================================
    PAGE LAYOUT - FLUID RESPONSIVE
    ================================ */
-.page-container {
-  max-width: min(90vw, 1200px); /* Fluid container */
-  margin: 0 auto;
-  padding: 0 clamp(0.75rem, 4vw, 1.5rem); /* 12px -> 24px auto */
-}
-
-.page-container .ant-card {
-  padding: clamp(1rem, 3vw, 1.5rem); /* 16px -> 24px auto */
-  margin-bottom: 16px;
-}
-
-.page-header {
-  margin-bottom: 24px;
-  padding-bottom: 16px;
-  border-bottom: 1px solid #f0f0f0;
-}
-
-.page-title {
-  font-size: clamp(1.125rem, 4vw, 1.5rem); /* 18px -> 24px auto */
-  font-weight: 600;
-  color: rgb(200, 103, 0);
-  word-wrap: break-word;
-}
-
-.page-title::before {
-  content: "📋";
-  margin-right: 8px;
-}
 
 /* ================================
    COMPONENTS - FLUID RESPONSIVE
@@ -290,35 +169,6 @@ body {
 /* ================================
    PAGINATION - FLUID RESPONSIVE
    ================================ */
-.custom-pagination {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-between;
-  align-items: center;
-  gap: clamp(8px, 2vw, 16px); /* Auto spacing */
-  margin-top: 16px;
-  padding: clamp(8px, 2vw, 16px) 0;
-  border-top: 1px solid #f0f0f0;
-}
-
-.custom-pagination-controls {
-  display: flex;
-  flex-wrap: wrap;
-  gap: clamp(4px, 1vw, 8px);
-  justify-content: center;
-}
-
-.custom-pagination-right {
-  display: flex;
-  flex-wrap: wrap;
-  gap: clamp(4px, 1vw, 8px);
-  align-items: center;
-}
-
-/* Auto-hide pagination "Go to" on small screens */
-.pagination-jump {
-  display: clamp(0, 100vw - 480px, 1); /* Hide when < 480px */
-}
 
 /* ================================
    UTILITY CLASSES
