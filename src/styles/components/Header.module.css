@@ -1,0 +1,65 @@
+/* ================================
+   HEADER COMPONENT STYLES (CSS Module)
+   ================================ */
+
+.header {
+    background: #001529 !important;
+    border-bottom: 1px solid #f0f0f0;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    width: 100% !important;
+    padding: 0 !important;
+}
+
+.container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: var(--header-height, 64px);
+    padding: 0 var(--spacing-lg);
+    max-width: 100%;
+    width: 100%;
+}
+
+.logo {
+    color: white;
+    font-size: var(--font-size-lg);
+    font-weight: bold;
+    white-space: nowrap;
+}
+
+.menu {
+    flex: 1;
+    justify-content: center;
+    border-bottom: none !important;
+}
+
+.userSection {
+    color: white;
+    display: flex;
+    align-items: center;
+}
+
+.userSection .ant-btn {
+    border: none;
+    box-shadow: none;
+    font-size: var(--font-size-sm) !important;
+    padding: var(--spacing-xs) var(--spacing-sm) !important;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .container {
+        padding: 0 var(--spacing-md);
+    }
+
+    .logo {
+        font-size: var(--font-size-base);
+    }
+
+    .userSection span {
+        display: none; /* Hide username on mobile */
+    }
+}

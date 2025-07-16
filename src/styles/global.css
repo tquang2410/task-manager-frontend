@@ -25,6 +25,8 @@
   --font-size-sm: clamp(0.875rem, 2vw, 1rem);
   --font-size-base: clamp(1rem, 2.5vw, 1.125rem);
   --font-size-lg: clamp(1.125rem, 3vw, 1.25rem);
+  /* Layout */
+  --header-height: clamp(50px, 8vh, 64px);
 }
 
 /* ================================

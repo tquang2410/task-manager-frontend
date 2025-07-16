@@ -4,6 +4,7 @@ import { UserOutlined, LogoutOutlined } from '@ant-design/icons';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { useAuth } from '../../context/AuthContext';
 import { getAvatarById} from '../../utils/avatars';
+import styles from '../../styles/components/Header.module.css'
 const { Header: AntHeader } = Layout;
 
 const Header = () => {
@@ -56,7 +57,7 @@ const Header = () => {
     ];
 
   return (
-      <AntHeader className="app-header">
+      <AntHeader className={styles.header}>
         <div className="header-container">
             {/* Logo */}
             <div className="header-logo">

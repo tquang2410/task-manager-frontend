@@ -1,0 +1,60 @@
+/* ================================
+   AUTH COMPONENTS STYLES (CSS Module)
+   ================================ */
+
+.authContainer {
+    width: 100vw;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    padding: var(--spacing-lg);
+}
+
+.authBox {
+    background: white;
+    padding: var(--spacing-xl);
+    border-radius: 12px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    width: min(90vw, 400px);
+    max-width: 400px;
+}
+
+.authTitle {
+    text-align: center;
+    margin-bottom: 30px;
+    color: #333;
+    font-size: var(--font-size-lg);
+    font-weight: 600;
+}
+
+.authFooter {
+    text-align: center;
+    margin-top: 20px;
+}
+
+.authFooter a {
+    color: var(--color-primary);
+    text-decoration: none;
+}
+
+.authFooter a:hover {
+    text-decoration: underline;
+}
+
+/* Responsive for mobile */
+@media (max-width: 576px) {
+    .authContainer {
+        padding: var(--spacing-md);
+    }
+
+    .authBox {
+        padding: var(--spacing-lg);
+        width: 95vw;
+    }
+
+    .authTitle {
+        font-size: var(--font-size-base);
+    }
+}
