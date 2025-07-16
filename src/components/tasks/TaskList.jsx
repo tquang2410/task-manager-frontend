@@ -2,10 +2,9 @@ import PropTypes from 'prop-types';
 import { Table, Button, Space, Tag } from 'antd';
 import { EditOutlined, DeleteOutlined } from '@ant-design/icons';
 import CustomPagination from '../common/CustomPagination';
+import styles from '../../styles/components/TaskList.module.css'
 
 const TaskList = ({ tasks, loading, onEdit, onDelete, pagination, onPaginationChange }) => {
-    console.log('🔍 TaskList received tasks:', tasks.length);
-    console.log('🔍 First few tasks:', tasks.slice(0, 3));
 
     const columns = [
         {
@@ -14,9 +13,9 @@ const TaskList = ({ tasks, loading, onEdit, onDelete, pagination, onPaginationCh
             key: 'title',
             render: (title, record) => (
                 <div>
-                    <div style={{ fontWeight: 'bold' }}>{title}</div>
+                    <div className={styles.taskTitle}>{title}</div>
                     {record.description && (
-                        <div style={{ fontSize: '12px', color: '#666', marginTop: '4px' }}>
+                        <div className={styles.taskDescription}>
                             {record.description}
                         </div>
                     )}
@@ -31,10 +30,13 @@ const TaskList = ({ tasks, loading, onEdit, onDelete, pagination, onPaginationCh
             dataIndex: 'status',
             key: 'status',
             render: (status) => (
-                <Tag color={
-                    status === 'completed' ? 'green' :
-                        status === 'in-progress' ? 'blue' : 'orange'
-                }>
+                <Tag
+                    className={styles.statusBadge}
+                    color={
+                        status === 'completed' ? 'green' :
+                            status === 'in-progress' ? 'blue' : 'orange'
+                    }
+                >
                     {status.replace('-', ' ').toUpperCase()}
                 </Tag>
             ),
@@ -71,7 +73,7 @@ const TaskList = ({ tasks, loading, onEdit, onDelete, pagination, onPaginationCh
             title: 'Actions',
             key: 'actions',
             render: (_, record) => (
-                <Space size="middle">
+                <div className={styles.actionButtons}>
                     <Button
                         type="text"
                         icon={<EditOutlined />}
@@ -85,7 +87,7 @@ const TaskList = ({ tasks, loading, onEdit, onDelete, pagination, onPaginationCh
                         onClick={() => onDelete(record.id)}
                         title="Delete task"
                     />
-                </Space>
+                </div>
             ),
             onCell: () => ({
                 'data-label': 'Actions'
@@ -104,9 +106,9 @@ const TaskList = ({ tasks, loading, onEdit, onDelete, pagination, onPaginationCh
     console.log('🔍 Paginated tasks length:', paginatedTasks.length);
 
     return (
-        <div>
-            {/* Table without pagination */}
+        <div className={styles.taskList}>
             <Table
+                className={styles.table}
                 columns={columns}
                 dataSource={paginatedTasks}
                 loading={loading}
@@ -117,7 +119,6 @@ const TaskList = ({ tasks, loading, onEdit, onDelete, pagination, onPaginationCh
                 }}
             />
 
-            {/* Custom Pagination */}
             <CustomPagination
                 current={current}
                 pageSize={pageSize}

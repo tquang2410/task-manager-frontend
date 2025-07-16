@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { Button, Select, Input, Space } from 'antd';
 import { LeftOutlined, RightOutlined } from '@ant-design/icons';
 import PropTypes from 'prop-types';
+import styles from '../../styles/components/CustomPagination.module.css';
 
 const CustomPagination = ({ current, pageSize, total, onChange }) => {
     const [jumpPage, setJumpPage] = useState('');
@@ -74,74 +75,83 @@ const CustomPagination = ({ current, pageSize, total, onChange }) => {
     if (total === 0) return null;
 
     return (
-        <div className="custom-pagination">
+        <div className={styles.paginationContainer}>
             {/* Left: Page info */}
-            <div style={{ color: '#666' }}>
+            <div className={styles.paginationInfo}>
                 Showing {startIndex}-{endIndex} of {total} tasks
             </div>
 
             {/* Center: Page navigation */}
-            <Space className="custom-pagination-controls" >
-                {/* Previous button */}
-                <Button
-                    icon={<LeftOutlined />}
-                    disabled={current === 1}
-                    onClick={() => handlePageChange(current - 1)}
-                >
-                    Previous
-                </Button>
+            <div className={styles.paginationControls}>
+                <div className={styles.paginationButtons}>
+                    {/* Previous button */}
+                    <Button
+                        icon={<LeftOutlined />}
+                        disabled={current === 1}
+                        onClick={() => handlePageChange(current - 1)}
+                    >
+                        Previous
+                    </Button>
 
-                {/* Page numbers */}
-                {getPageNumbers().map((page, index) => (
-                    page === '...' ? (
-                        <span key={index} style={{ padding: '0 8px', color: '#999' }}>...</span>
-                    ) : (
-                        <Button
-                            key={page}
-                            type={current === page ? 'primary' : 'default'}
-                            onClick={() => handlePageChange(page)}
-                        >
-                            {page}
-                        </Button>
-                    )
-                ))}
+                    {/* Page numbers */}
+                    {getPageNumbers().map((page, index) => (
+                        page === '...' ? (
+                            <span key={index} style={{ padding: '0 8px', color: '#999' }}>...</span>
+                        ) : (
+                            <Button
+                                key={page}
+                                type={current === page ? 'primary' : 'default'}
+                                onClick={() => handlePageChange(page)}
+                            >
+                                {page}
+                            </Button>
+                        )
+                    ))}
 
-                {/* Next button */}
-                <Button
-                    disabled={current === totalPages}
-                    onClick={() => handlePageChange(current + 1)}
-                >
-                    Next
-                    <RightOutlined />
-                </Button>
-            </Space>
+                    {/* Next button */}
+                    <Button
+                        disabled={current === totalPages}
+                        onClick={() => handlePageChange(current + 1)}
+                    >
+                        Next
+                        <RightOutlined />
+                    </Button>
+                </div>
+            </div>
 
             {/* Right: Page size selector & jump */}
-            <Space>
+            <div className={styles.paginationRight}>
                 {/* Page size selector */}
-                <Select className="custom-pagination-right"
-                    value={pageSize}
-                    onChange={handlePageSizeChange}
-                >
-                    <Select.Option value={10}>10/page</Select.Option>
-                    <Select.Option value={20}>20/page</Select.Option>
-                    <Select.Option value={50}>50/page</Select.Option>
-                    <Select.Option value={100}>100/page</Select.Option>
-                </Select>
+                <div className={styles.pageSizeSelector}>
+                    <Select
+                        value={pageSize}
+                        onChange={handlePageSizeChange}
+                    >
+                        <Select.Option value={10}>10/page</Select.Option>
+                        <Select.Option value={20}>20/page</Select.Option>
+                        <Select.Option value={50}>50/page</Select.Option>
+                        <Select.Option value={100}>100/page</Select.Option>
+                    </Select>
+                </div>
 
                 {/* Jump to page */}
-        <div className="pagination-jump">
-            <span>Go to</span>
-            <Input
-                style={{ width: 60 }}
-                value={jumpPage}
-                onChange={(e) => setJumpPage(e.target.value)}
-                onPressEnter={handleJumpPage}
-                placeholder="Page"
-            />
-            <Button onClick={handleJumpPage}>Go</Button>
-        </div>
-            </Space>
+                <div className={styles.jumpToPage}>
+                    <span>Go to</span>
+                    <Input
+                        style={{
+                            width: '60px !important',
+                            minWidth: '60px',
+                            maxWidth: '60px',
+                            textAlign: 'center'
+                        }}
+                        value={jumpPage}
+                        onChange={(e) => setJumpPage(e.target.value)}
+                        onPressEnter={handleJumpPage}
+                        placeholder="Page"
+                    />
+                    <Button onClick={handleJumpPage}>Go</Button>
+                </div>
+            </div>
         </div>
     );
 };

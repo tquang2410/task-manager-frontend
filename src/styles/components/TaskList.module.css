@@ -1,0 +1,96 @@
+/* ================================
+   TASK LIST COMPONENT STYLES (CSS Module)
+   ================================ */
+
+.taskList {
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+    overflow: hidden;
+}
+
+.table {
+    font-size: var(--font-size-sm);
+}
+
+.table .ant-table-tbody > tr > td {
+    padding: var(--spacing-sm) var(--spacing-md) !important;
+    vertical-align: top;
+}
+
+.table .ant-table-thead > tr > th {
+    padding: var(--spacing-md) !important;
+    font-weight: 600;
+    background: #fafafa;
+}
+
+/* Task title styling */
+.taskTitle {
+    font-weight: 500;
+    margin-bottom: var(--spacing-xs);
+    line-height: 1.4;
+}
+
+.taskDescription {
+    color: #666;
+    font-size: var(--font-size-sm);
+    line-height: 1.4;
+    max-width: 300px;
+    word-wrap: break-word;
+}
+
+/* Status badges */
+.statusBadge {
+    font-size: var(--font-size-sm);
+    padding: 4px 8px;
+    border-radius: 4px;
+}
+
+/* Action buttons */
+.actionButtons {
+    display: flex;
+    gap: var(--spacing-xs);
+}
+
+.actionButtons .ant-btn {
+    padding: 4px 8px;
+    height: auto;
+    font-size: var(--font-size-sm);
+}
+
+/* Responsive Table */
+@media (max-width: 768px) {
+    .table .ant-table-thead > tr > th:nth-child(3), /* Priority */
+    .table .ant-table-tbody > tr > td:nth-child(3) {
+        display: none;
+    }
+
+    .table .ant-table-thead > tr > th:nth-child(4), /* Due Date */
+    .table .ant-table-tbody > tr > td:nth-child(4) {
+        display: none;
+    }
+
+    .taskDescription {
+        max-width: 200px;
+    }
+
+    .actionButtons {
+        flex-direction: column;
+        gap: 4px;
+    }
+}
+
+@media (max-width: 576px) {
+    .table .ant-table-tbody > tr > td {
+        padding: var(--spacing-xs) !important;
+    }
+
+    .taskTitle {
+        font-size: var(--font-size-sm);
+    }
+
+    .taskDescription {
+        max-width: 150px;
+        font-size: 12px;
+    }
+}

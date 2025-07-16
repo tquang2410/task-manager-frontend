@@ -1,0 +1,92 @@
+/* ================================
+   CUSTOM PAGINATION COMPONENT STYLES
+   ================================ */
+
+.paginationContainer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: var(--spacing-lg) var(--spacing-xl);
+    margin-top: 0;
+    border-top: 1px solid #f0f0f0;
+    background: linear-gradient(to bottom, #fafafa, #f5f5f5);
+}
+
+.paginationInfo {
+    color: #666;
+    font-size: var(--font-size-sm);
+    font-weight: 500;
+}
+
+.paginationControls {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-md);
+}
+
+.paginationButtons {
+    display: flex;
+    gap: var(--spacing-xs);
+}
+
+.paginationRight {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-md);
+}
+
+.pageSizeSelector {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-xs);
+}
+
+.pageSizeSelector .ant-select {
+    min-width: 80px;
+}
+
+.jumpToPage {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-xs);
+}
+
+.jumpToPage .ant-input {
+    width: 50px;
+    text-align: center;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .paginationContainer {
+        flex-direction: column;
+        gap: var(--spacing-md);
+        padding: var(--spacing-md);
+    }
+
+    .paginationControls {
+        width: 100%;
+        justify-content: center;
+    }
+
+    .paginationRight {
+        width: 100%;
+        justify-content: center;
+        flex-wrap: wrap;
+    }
+}
+
+@media (max-width: 576px) {
+    .jumpToPage {
+        display: none; /* Hide "Go to page" on mobile */
+    }
+
+    .paginationButtons {
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+
+    .pageSizeSelector {
+        margin-bottom: var(--spacing-xs);
+    }
+}
