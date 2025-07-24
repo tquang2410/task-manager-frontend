@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
 import { Table, Button, Space, Tag } from 'antd';
-import { EditOutlined, DeleteOutlined } from '@ant-design/icons';
+import {EditOutlined, DeleteOutlined, CheckOutlined} from '@ant-design/icons';
 import CustomPagination from '../common/CustomPagination';
 import styles from '../../styles/components/TaskList.module.css'
 
@@ -87,6 +87,14 @@ const TaskList = ({ tasks, loading, onEdit, onDelete, pagination, onPaginationCh
                         onClick={() => onDelete(record.id)}
                         title="Delete task"
                     />
+                    {record.status !== 'completed' && (
+                        <Button
+                            type="text"
+                            icon={<CheckOutlined />}
+                            onClick={() => onEdit({ ...record, status: 'completed' })}
+                            title="Finish task"
+                        />
+                    )}
                 </div>
             ),
             onCell: () => ({

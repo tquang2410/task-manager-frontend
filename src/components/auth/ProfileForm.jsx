@@ -1,9 +1,9 @@
 import { useState, useEffect } from 'react';
 import { Form, Input, Button, Divider, message } from 'antd';
 import { UserOutlined, MailOutlined, LockOutlined } from '@ant-design/icons';
-import { useAuth } from '../../context/AuthContext';
+import useAuth from "../../hooks/useAuth.js";
 import { authAPI } from '../../utils/api';
-import {AVATARS, getAvatarById} from "../../utils/avatars.js";
+import {AVATARS} from "../../utils/avatars.js";
 import PropTypes from 'prop-types';
 
 const ProfileForm = ({ onSuccess }) => {
@@ -102,8 +102,8 @@ const ProfileForm = ({ onSuccess }) => {
                 ]}
             >
                 <Input
-                    prefix={<MailOutlined />}
-                    placeholder="Enter your email"
+                    readOnly
+                    style={{ backgroundColor: '#f5f5f5' }}
                 />
             </Form.Item>
             {/* Avatar Selection */}

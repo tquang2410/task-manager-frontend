@@ -1,11 +1,11 @@
-import { useAuth } from '../context/AuthContext';
-import { useTaskContext } from '../context/TaskContext';
+import useAuth from "../hooks/useAuth.js";
+import useTask from "../hooks/useTask.js";
 import { Card, Col, Row, Statistic, List } from "antd";
 import styles from '../styles/components/Dashboard.module.css';
 
 const DashboardPage = () => {
     const { user } = useAuth();
-    const { tasks } = useTaskContext();
+    const { tasks } = useTask();
 
     // Calculate stats from real tasks
     const stats = {
@@ -16,9 +16,7 @@ const DashboardPage = () => {
     };
 
     // Get recent tasks (latest 5)
-    const recentTasks = tasks
-        .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))
-        .slice(0, 5);
+    const recentTasks = [...tasks].sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))
 
     return (
         <div className={styles.dashboard}>

@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Button, Space, Modal } from 'antd';
 import { PlusOutlined } from '@ant-design/icons';
-import { useTaskContext } from '../context/TaskContext';
+import useTask from '../hooks/useTask';
 import TaskModal from '../components/tasks/TaskModal';
 import TaskList from '../components/tasks/TaskList';
 import styles from '../styles/components/PageLayout.module.css'
@@ -14,7 +14,7 @@ const TasksPage = () => {
         setFilter,
         openModal,
         deleteTask,
-    } = useTaskContext();
+    } = useTask();
 
     // Local pagination state
     const [pagination, setPagination] = useState({
@@ -55,7 +55,8 @@ const TasksPage = () => {
             <div className={styles.pageHeader}>
                 <h1 className={styles.pageTitle}>Tasks Management</h1>
                 <Button
-                    style={{ marginTop: 16 }}
+                    className={styles.createButton}
+
                     type="primary"
                     icon={<PlusOutlined />}
                     onClick={() => openModal()} // null = add mode

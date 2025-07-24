@@ -2,7 +2,7 @@ import React from 'react';
 import { Layout, Menu, Dropdown, Avatar, Button } from 'antd';
 import { UserOutlined, LogoutOutlined } from '@ant-design/icons';
 import { useNavigate, useLocation } from 'react-router-dom';
-import { useAuth } from '../../context/AuthContext';
+import useAuth from '../../hooks/useAuth';
 import { getAvatarById} from '../../utils/avatars';
 import styles from '../../styles/components/Header.module.css'
 

@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { Form, Input, Button, notification } from 'antd';
 import { UserOutlined, LockOutlined, MailOutlined } from '@ant-design/icons';
-import { useAuth } from '../../context/AuthContext';
+import useAuth from "../../hooks/useAuth.js";
 import { authAPI } from '../../utils/api';
 import PropTypes from 'prop-types';
 

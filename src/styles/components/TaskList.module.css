@@ -37,6 +37,7 @@
     line-height: 1.4;
     max-width: 300px;
     word-wrap: break-word;
+    white-space: pre-line;
 }
 
 /* Status badges */
@@ -56,6 +57,7 @@
     padding: 4px 8px;
     height: auto;
     font-size: var(--font-size-sm);
+
 }
 
 /* Responsive Table */

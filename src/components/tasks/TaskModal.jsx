@@ -1,5 +1,5 @@
 // src/components/tasks/TaskModal.jsx
-import { useTaskContext } from '../../context/TaskContext';
+import useTask from "../../hooks/useTask.js";
 import FormModal from '../common/FormModal';
 import TaskForm from './TaskForm';
 
@@ -9,16 +9,16 @@ const TaskModal = () => {
         closeModal,
         editingTask,
         isEditMode,
-        addTask,
+        createTask,
         updateTask,
-    } = useTaskContext();
+    } = useTask();
 
     // Handle form submission
     const handleSubmit = (formData) => {
         if (isEditMode) {
             updateTask(editingTask.id, formData);
         } else {
-            addTask(formData);
+            createTask(formData);
         }
         closeModal();
     };
