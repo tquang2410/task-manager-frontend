@@ -1,0 +1,106 @@
+/* ================================
+   SIDEBAR COMPONENT STYLES (CSS Module)
+   ================================ */
+
+.sidebar {
+    /* Đảm bảo Sidebar có nền tối và chiều cao đầy đủ */
+    background: #001529 !important; /* Màu nền tối cho sider */
+    /* min-height: 100vh; */ /* Đã được xử lý bởi Layout trong App.js */
+    padding-top: 16px; /* Khoảng cách từ trên xuống cho logo/menu */
+}
+
+.logo {
+    /* Style cho logo trong sidebar (nếu bạn giữ nó ở đây) */
+    height: 32px; /* Chiều cao cố định cho logo */
+    margin: 16px; /* Khoảng cách xung quanh logo */
+    background: rgba(255, 255, 255, 0.2); /* Nền mờ cho logo */
+    border-radius: 6px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    font-size: var(--font-size-md); /* Kích thước font cho logo */
+    font-weight: bold;
+    white-space: nowrap;
+    overflow: hidden; /* Đảm bảo text không tràn khi sidebar thu gọn */
+}
+
+/* Ghi đè style của Ant Design Menu */
+.sidebar :global(.ant-menu) {
+    border-right: none !important; /* Loại bỏ đường viền phải của menu */
+}
+
+/* Style cho các item menu */
+.sidebar :global(.ant-menu-item) {
+    /* Các style chung cho tất cả các item */
+    margin-bottom: 8px !important; /* Khoảng cách giữa các item */
+    border-radius: 8px; /* Bo tròn các góc của item */
+    padding-left: 16px !important; /* Đảm bảo padding trái cho text và icon */
+    height: 48px !important; /* Chiều cao tiêu chuẩn cho item menu */
+    line-height: 48px !important; /* Căn giữa text theo chiều dọc */
+    display: flex; /* Sử dụng flexbox để căn icon và text */
+    align-items: center; /* Căn giữa theo chiều dọc */
+    gap: 12px; /* Khoảng cách giữa icon và text */
+    color: rgba(255, 255, 255, 0.75) !important; /* Màu chữ mặc định (mờ) */
+    transition: all 0.3s cubic-bezier(0.645, 0.045, 0.355, 1); /* Hiệu ứng chuyển động */
+}
+
+/* Style cho icon trong menu item */
+.sidebar :global(.ant-menu-item-icon) {
+    font-size: 18px; /* Kích thước icon */
+    color: inherit !important; /* Kế thừa màu từ .ant-menu-item */
+}
+
+/* Style cho nội dung text của menu item */
+.sidebar :global(.ant-menu-title-content) {
+    font-size: var(--font-size-base); /* Kích thước chữ */
+    color: inherit !important; /* Kế thừa màu từ .ant-menu-item */
+}
+
+/* Style khi hover vào item menu */
+.sidebar :global(.ant-menu-item:hover) {
+    background-color: #1890ff !important; /* Màu xanh khi hover, ví dụ từ Ant Design primary color */
+    color: white !important; /* Chữ trắng khi hover */
+}
+
+/* Style cho item menu ĐANG ĐƯỢC CHỌN */
+.sidebar :global(.ant-menu-item-selected) {
+    background-color: #1890ff !important; /* Màu xanh khi được chọn */
+    color: white !important; /* Chữ trắng khi được chọn */
+    font-weight: 500; /* Có thể làm chữ đậm hơn */
+}
+
+/* -------------------------------------------------------------------------- */
+/* STYLES KHI SIDEBAR BỊ THU GỌN (COLLAPSED) */
+/* -------------------------------------------------------------------------- */
+
+/* Các styles này sẽ được áp dụng khi Sider có thuộc tính collapsed */
+/* Bạn cần thêm thuộc tính `collapsed` và `onCollapse` vào Sider trong Sidebar.jsx */
+
+/* Đảm bảo các item menu vẫn căn giữa và icon rõ ràng khi thu gọn */
+.sidebar :global(.ant-menu-inline-collapsed .ant-menu-item) {
+    padding: 0 !important; /* Loại bỏ padding ngang khi thu gọn */
+    justify-content: center; /* Căn giữa icon */
+    gap: 0; /* Không có khoảng cách giữa icon và text (text bị ẩn) */
+}
+
+/* Ẩn text khi sidebar thu gọn */
+.sidebar :global(.ant-menu-inline-collapsed .ant-menu-title-content) {
+    opacity: 0;
+    width: 0;
+    overflow: hidden;
+    pointer-events: none; /* Không cho click vào text ẩn */
+}
+
+/* Điều chỉnh vị trí icon khi sidebar thu gọn */
+.sidebar :global(.ant-menu-inline-collapsed .ant-menu-item-icon) {
+    margin: 0 !important;
+    font-size: 20px !important; /* Icon lớn hơn một chút khi thu gọn */
+}
+
+/* Điều chỉnh vị trí của popup khi sidebar thu gọn và hover vào item */
+.sidebar :global(.ant-menu-inline-collapsed .ant-menu-submenu-title),
+.sidebar :global(.ant-menu-inline-collapsed .ant-menu-item) {
+    text-align: center; /* Căn giữa icon */
+    /* Để popup xuất hiện đúng vị trí, bạn cần đảm bảo overflow trên Sider/Menu không chặn nó */
+}

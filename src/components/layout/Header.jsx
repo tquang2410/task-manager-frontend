@@ -1,5 +1,5 @@
 import React from 'react';
-import { Layout, Menu, Dropdown, Avatar, Button } from 'antd';
+import { Layout, Dropdown, Avatar, Button } from 'antd';
 import { UserOutlined, LogoutOutlined } from '@ant-design/icons';
 import { useNavigate, useLocation } from 'react-router-dom';
 import useAuth from '../../hooks/useAuth';
@@ -10,15 +10,10 @@ const { Header: AntHeader } = Layout;
 
 const Header = () => {
     const navigate = useNavigate();
-    const location = useLocation();
     const { user, logout, isAuthenticated } = useAuth();
     console.log('🔍 Header render - user avatarId:', user?.avatarId);
     console.log('🔍 Header render - user object:', user);
 
-    // Chỗ này xử lý click menu
-    const handleMenuClick = (e) => {
-        navigate(e.key); // Điều hướng đến trang tương ứng
-    };
 
     // Chỗ này xử lý đăng xuất
     const handleLogout = () => {
@@ -26,20 +21,6 @@ const Header = () => {
         navigate('/login'); // Điều hướng về trang đăng nhập sau khi đăng xuất
     };
 
-    const menuItems = [
-        {
-            key: '/',
-            label: 'Dashboard',
-        },
-        {
-            key: '/tasks',
-            label: 'Tasks',
-        },
-        {
-            key: '/profile',
-            label: 'Profile',
-        },
-    ];
 
     // Tạo menu dropdown cho người dùng
     const userMenuItems = [
@@ -67,15 +48,6 @@ const Header = () => {
                 <div className={styles.logo}>
                     📋 TaskManager
                 </div>
-                {/* Menu */}
-                <Menu
-                    theme="dark"
-                    mode="horizontal"
-                    selectedKeys={[location.pathname]}
-                    items={menuItems}
-                    onClick={handleMenuClick}
-                    className={styles.menu}
-                />
                 {/* User Dropdown */}
                 {isAuthenticated && (
                     <div className={styles.userSection}>
