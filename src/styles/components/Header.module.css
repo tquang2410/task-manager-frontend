@@ -39,6 +39,7 @@
     color: white;
     display: flex;
     align-items: center;
+
 }
 
 .userSection .ant-btn {
@@ -46,6 +47,7 @@
     box-shadow: none;
     font-size: var(--font-size-sm) !important;
     padding: var(--spacing-xs) var(--spacing-sm) !important;
+
 }
 
 /* Responsive Design */
@@ -61,4 +63,14 @@
     .userSection span {
         display: none; /* Hide username on mobile */
     }
+}
+/* ================================
+   DATETIME DISPLAY STYLES
+   ================================ */
+.datetimeDisplay {
+    font-family: "Roboto", sans-serif; /* Thay đổi font */
+    font-size: 24px;                  /* Thay đổi kích thước */
+    font-weight: bold;                /* Làm cho chữ đậm hơn */
+    color: #ffffff;                   /* Thay đổi màu chữ */
+    text-shadow: 2px 2px 4px #000000;  /* Thêm hiệu ứng đổ bóng */
 }

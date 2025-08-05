@@ -1,10 +1,14 @@
 import React from 'react';
-import { Layout, Dropdown, Avatar, Button } from 'antd';
+import { Layout, Dropdown, Avatar, Button, Typography } from 'antd';
 import { UserOutlined, LogoutOutlined } from '@ant-design/icons';
-import { useNavigate, useLocation } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import useAuth from '../../hooks/useAuth';
 import { getAvatarById} from '../../utils/avatars';
 import styles from '../../styles/components/Header.module.css'
+import dayjs from 'dayjs';
+import weekday from 'dayjs/plugin/weekday';
+dayjs.extend(weekday);
+import { useState, useEffect } from 'react';
 
 const { Header: AntHeader } = Layout;
 
@@ -14,6 +18,14 @@ const Header = () => {
     console.log('🔍 Header render - user avatarId:', user?.avatarId);
     console.log('🔍 Header render - user object:', user);
 
+    const [currentTime, setCurrentTime] = useState(dayjs());
+    useEffect(() => {
+        const timer = setInterval(() => {
+            setCurrentTime(dayjs());
+        }, 1000);
+
+        return () => clearInterval(timer);
+    }, []);
 
     // Chỗ này xử lý đăng xuất
     const handleLogout = () => {
@@ -44,10 +56,10 @@ const Header = () => {
     return (
         <AntHeader className={styles.header}>
             <div className={styles.container}>
-                {/* Logo */}
-                <div className={styles.logo}>
-                    📋 TaskManager
-                </div>
+                <Typography.Text className={styles.datetimeDisplay}>
+                    Today is {currentTime.format('DD/MM/YYYY')}. Have a good {currentTime.format('dddd')}
+                </Typography.Text>
+
                 {/* User Dropdown */}
                 {isAuthenticated && (
                     <div className={styles.userSection}>

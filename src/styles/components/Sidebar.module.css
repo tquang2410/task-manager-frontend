@@ -6,12 +6,12 @@
     /* Đảm bảo Sidebar có nền tối và chiều cao đầy đủ */
     background: #001529 !important; /* Màu nền tối cho sider */
     /* min-height: 100vh; */ /* Đã được xử lý bởi Layout trong App.js */
-    padding-top: 16px; /* Khoảng cách từ trên xuống cho logo/menu */
+    padding-top: 46px; /* Khoảng cách từ trên xuống cho logo/menu */
 }
 
 .logo {
     /* Style cho logo trong sidebar (nếu bạn giữ nó ở đây) */
-    height: 32px; /* Chiều cao cố định cho logo */
+    height: 46px; /* Chiều cao cố định cho logo */
     margin: 16px; /* Khoảng cách xung quanh logo */
     background: rgba(255, 255, 255, 0.2); /* Nền mờ cho logo */
     border-radius: 6px;

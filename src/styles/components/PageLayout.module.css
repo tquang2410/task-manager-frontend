@@ -31,7 +31,7 @@
 }
 
 .pageTitle::before {
-    content: "📋";
+    content: "🎇";
     margin-right: 8px;
 }
 .createButton {

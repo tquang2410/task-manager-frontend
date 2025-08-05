@@ -53,7 +53,7 @@ const TasksPage = () => {
     return (
         <div className={styles.pageContainer}>
             <div className={styles.pageHeader}>
-                <h1 className={styles.pageTitle}>Tasks Management</h1>
+                <h1 className={styles.pageTitle}>Welcome to Task Manager</h1>
                 <Button
                     className={styles.createButton}
 

@@ -23,7 +23,10 @@ const Sidebar = () => {
                onCollapse={(value) => setCollapsed(value)}
                width={220}
                className={styles.sidebar}>
-            {/*Sau này sẽ đặt ảnh background */}
+            {/* Logo */}
+            <div className={styles.logo}>
+                📋 Task Manager
+            </div>
             <Menu
                 theme="dark"
                 mode="inline"
