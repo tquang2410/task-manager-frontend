@@ -12,12 +12,12 @@ const TaskForm = ({ onCancel, isEditMode = false }) => {
                 rules={[
                     { required: true, message: 'Please enter task title!' },
                     { min: 3, message: 'Title must be at least 3 characters!' },
-                    { max: 100, message: 'Title must be less than 100 characters!' }
+                    { max: 300, message: 'Title must be less than 300 characters!' }
                 ]}
             >
                 <Input
                     placeholder="Enter task title"
-                    maxLength={100}
+                    maxLength={300}
                     showCount
                 />
             </Form.Item>
@@ -26,13 +26,13 @@ const TaskForm = ({ onCancel, isEditMode = false }) => {
                 name="description"
                 label="Description"
                 rules={[
-                    { max: 500, message: 'Description must be less than 500 characters!' }
+                    { max: 1000, message: 'Description must be less than 500 characters!' }
                 ]}
             >
                 <Input.TextArea
                     rows={3}
                     placeholder="Enter task description (optional)"
-                    maxLength={500}
+                    maxLength={1000}
                     showCount
                 />
             </Form.Item>
