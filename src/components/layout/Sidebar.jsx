@@ -4,7 +4,7 @@ import { Layout, Menu } from 'antd';
 import { useNavigate, useLocation } from 'react-router-dom';
 import styles from '../../styles/components/Sidebar.module.css';
 import { DashboardOutlined, ProfileOutlined, UnorderedListOutlined } from '@ant-design/icons';
-
+import DateTimeDisplay from '../common/DateTimeDisplay';
 const { Sider } = Layout;
 
 const Sidebar = () => {
@@ -26,6 +26,13 @@ const Sidebar = () => {
             {/* Logo */}
             <div className={styles.logo}>
                 📋 Task Manager
+            </div>
+            <div className={styles.timeDisplay}>
+                <DateTimeDisplay
+                    showTime={true}
+                    showDate={false}
+                    showWeekday={false}
+                />
             </div>
             <Menu
                 theme="dark"

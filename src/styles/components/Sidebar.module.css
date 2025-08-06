@@ -104,3 +104,15 @@
     text-align: center; /* Căn giữa icon */
     /* Để popup xuất hiện đúng vị trí, bạn cần đảm bảo overflow trên Sider/Menu không chặn nó */
 }
+.timeDisplay {
+    padding: 16px;
+    text-align: center;
+    margin: 8px 16px;
+    background: rgba(0, 0, 0, 0.2);
+    border-radius: 8px;
+}
+
+/* Đặt màu chữ trắng cho timer trong sidebar */
+.timeDisplay :global(.ant-typography) {
+    color: white !important;
+}
