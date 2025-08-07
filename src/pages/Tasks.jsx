@@ -5,6 +5,7 @@ import useTask from '../hooks/useTask';
 import TaskModal from '../components/tasks/TaskModal';
 import TaskList from '../components/tasks/TaskList';
 import styles from '../styles/components/PageLayout.module.css'
+import SearchBox from "../components/common/SearchBox.jsx";
 const TasksPage = () => {
     // Get state and actions from TaskContext
     const {
@@ -14,6 +15,8 @@ const TasksPage = () => {
         setFilter,
         openModal,
         deleteTask,
+        searchTerm,
+        setSearchTerm,
     } = useTask();
 
     // Local pagination state
@@ -63,6 +66,9 @@ const TasksPage = () => {
                 >
                     Create Task
                 </Button>
+                <div>
+                    <SearchBox searchTerm={searchTerm} onSearch={setSearchTerm}/>
+                </div>
             </div>
 
             <div className="filter-buttons">

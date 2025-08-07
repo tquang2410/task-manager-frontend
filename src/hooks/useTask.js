@@ -3,6 +3,8 @@ import { message } from 'antd';
 import { taskAPI } from '../utils/api';
 import useAuth from './useAuth';
 import { useEffect } from 'react';
+
+// Use for changing state
 import {
     setLoading,
     setTasks,
@@ -12,12 +14,17 @@ import {
     setFilter,
     openModal,
     closeModal,
+    setSearchTerm,
+
 } from '../store/slices/taskSlice';
+
 
 const useTask = () => {
     const dispatch = useDispatch();
     const { user, isAuthenticated } = useAuth();
-    const { tasks, loading, filter, isModalOpen, editingTask } = useSelector(
+
+    // This line get the tasks and related state from the Redux store
+    const { tasks, loading, filter, isModalOpen, editingTask, searchTerm } = useSelector(
         (state) => state.tasks
     );
     // Auto-load tasks when authenticated
@@ -83,12 +90,22 @@ const useTask = () => {
             message.error('Failed to delete task');
         }
     };
+    // Lower case search term for case-insensitive search
+    const searchTermLower = searchTerm.toLowerCase();
 
-    // Computed values
+    // Filter tasks based on search term
+    // const filteredTasks = tasks.filter(task => {
+    //     if (filter === 'all') return true;
+    //     return task.status === filter;
+    // });
     const filteredTasks = tasks.filter(task => {
-        if (filter === 'all') return true;
-        return task.status === filter;
-    });
+        // Search title
+        const searchMatch = task.title.toLowerCase().includes(searchTermLower);
+        // Search by filter
+        const statusMatch = filter === 'all' || task.status === filter;
+
+        return searchMatch && statusMatch;
+    })
 
     const isEditMode = editingTask !== null;
 
@@ -101,6 +118,7 @@ const useTask = () => {
         isModalOpen,
         editingTask,
         isEditMode,
+        searchTerm,
 
         // Actions
         loadTasks,
@@ -110,6 +128,7 @@ const useTask = () => {
         setFilter: (newFilter) => dispatch(setFilter(newFilter)),
         openModal: (task = null) => dispatch(openModal(task)),
         closeModal: () => dispatch(closeModal()),
+        setSearchTerm: (value) => dispatch(setSearchTerm(value)),
     };
 };
 

@@ -6,6 +6,7 @@ const initialState = {
     filter: 'all',
     isModalOpen: false,
     editingTask: null,
+    searchTerm: '',
 };
 
 const taskSlice = createSlice({
@@ -63,6 +64,9 @@ const taskSlice = createSlice({
             state.isModalOpen = false;
             state.editingTask = null;
         },
+        setSearchTerm: (state, action) => {
+            state.searchTerm = action.payload;
+        },
     },
 });
 
@@ -78,6 +82,7 @@ export const {
     setEditingTask,
     openModal,
     closeModal,
+    setSearchTerm,
 } = taskSlice.actions;
 
 // Export reducer
