@@ -27,3 +27,8 @@
 .suggestionItem:hover {
     background-color: #f1f3f4;
 }
+.suggestionIcon {
+    margin-right: 8px;
+    font-size: 16px;
+    color: #5f6368;
+}

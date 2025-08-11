@@ -2,7 +2,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { message } from 'antd';
 import { taskAPI } from '../utils/api';
 import useAuth from './useAuth';
-import { useEffect } from 'react';
+import {useEffect, useState} from 'react';
 
 // Use for changing state
 import {
@@ -27,6 +27,10 @@ const useTask = () => {
     const { tasks, loading, filter, isModalOpen, editingTask, searchTerm } = useSelector(
         (state) => state.tasks
     );
+    // Local state for bulk deletion
+    const [selectedTasks, setSelectedTasks] = useState([]);
+    const  [isBulkDeleteMode, setIsBulkDeleteMode] = useState(false);
+
     // Auto-load tasks when authenticated
     useEffect(() => {
         if (isAuthenticated && user) {
@@ -103,7 +107,11 @@ const useTask = () => {
     });
 
     // Suggestion search term
-    const suggestionTasks = searchTerm ? tasks.filter(task => task.title.toLowerCase().includes(searchTermLower)).slice(0, 10) : []; // Limit suggestions to 10
+    const suggestionTasks = searchTerm ? tasks.filter(task => task.title.toLowerCase().includes(searchTermLower)).slice(0, 10).map(task => ({
+        id: task.id,
+        title: task.title,
+        status: task.status,
+    })) : []; // Limit suggestions to 10
 
     const isEditMode = editingTask !== null;
 

@@ -36,7 +36,7 @@ const FormModal = ({
             onCancel={onCancel}
             footer={null} // Custom footer handled by form
             width={width}
-            destroyOnClose={true} // Reset form when modal closes
+            // destroyOnClose={true} // Reset form when modal closes
             {...modalProps}
         >
             <Form
