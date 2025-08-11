@@ -21,7 +21,10 @@ const SearchSuggestions = ({ suggestions, onSelect }) => {
                     style={{ backgroundColor: statusColors[task.status] }}
                 >
                     <ClockCircleOutlined className={styles.suggestionIcon}/>
-                    {task.title}
+                    {task.title && task.title.length > 50
+                        ? `${task.title.substring(0, 50)}...`
+                        : task.title
+                    }
                 </li>
             ))}
         </ul>

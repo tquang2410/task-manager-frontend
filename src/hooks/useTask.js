@@ -23,13 +23,14 @@ const useTask = () => {
     const dispatch = useDispatch();
     const { user, isAuthenticated } = useAuth();
 
+    // Local state for bulk deletion
+    const [selectedTaskIds, setSelectedTaskIds] = useState([]);
+    const  [isBulkDeleteMode, setIsBulkDeleteMode] = useState(false);
+
     // This line get the tasks and related state from the Redux store
     const { tasks, loading, filter, isModalOpen, editingTask, searchTerm } = useSelector(
         (state) => state.tasks
     );
-    // Local state for bulk deletion
-    const [selectedTasks, setSelectedTasks] = useState([]);
-    const  [isBulkDeleteMode, setIsBulkDeleteMode] = useState(false);
 
     // Auto-load tasks when authenticated
     useEffect(() => {
@@ -94,6 +95,39 @@ const useTask = () => {
             message.error('Failed to delete task');
         }
     };
+
+    // Delete bulk tasks
+    const deleteSelectedTasks = async () => {
+        try {
+            dispatch(deleteTask(selectedTaskIds)); // Dispatch action to delete tasks
+            setSelectedTaskIds([]); // Clear selection after deletion
+            setIsBulkDeleteMode(false); // Exit bulk delete mode
+        }
+        catch (error) {
+            message.error('Failed to delete selected tasks');
+        }
+    };
+    // Toggle bulk delete mode
+    const toggleBulkDeleteMode = () => {
+        setIsBulkDeleteMode(prevMode => !prevMode);
+        if (isBulkDeleteMode) {
+            setSelectedTaskIds([]); // Clear selection when exiting bulk delete mode
+        }
+    };
+
+    const toggleTaskSelection = (taskId) => {
+        setSelectedTaskIds(prevIds => {
+            if (prevIds.includes(taskId))
+            {
+                // If already selected, remove it
+                return prevIds.filter(id => id !== taskId);
+            } else {
+                // If not selected, add it
+                return [...prevIds, taskId];
+            }
+        });
+    };
+
     // Lower case search term for case-insensitive search
     const searchTermLower = searchTerm.toLowerCase();
 
@@ -126,6 +160,8 @@ const useTask = () => {
         isEditMode,
         searchTerm,
         suggestionTasks,
+        isBulkDeleteMode,
+        selectedTaskIds,
 
         // Actions
         loadTasks,
@@ -136,6 +172,9 @@ const useTask = () => {
         openModal: (task = null) => dispatch(openModal(task)),
         closeModal: () => dispatch(closeModal()),
         setSearchTerm: (value) => dispatch(setSearchTerm(value)),
+        toggleBulkDeleteMode,
+        deleteSelectedTasks,
+        toggleTaskSelection,
     };
 };
 

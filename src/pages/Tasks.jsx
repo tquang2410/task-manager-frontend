@@ -18,7 +18,12 @@ const TasksPage = () => {
         deleteTask,
         searchTerm,
         setSearchTerm,
-        suggestionTasks
+        suggestionTasks,
+        isBulkDeleteMode,
+        toggleBulkDeleteMode,
+        selectedTaskIds,
+        toggleTaskSelection,
+        deleteSelectedTasks,
     } = useTask();
 
     // Local pagination state
@@ -45,6 +50,13 @@ const TasksPage = () => {
             onOk: () => deleteTask(taskId),
         });
     };
+    const handleDeleteSelectedTasks = () => {
+        Modal.confirm({
+            title: `Are you sure you want to delete ${selectedTaskIds.length} tasks?`,
+            content: 'This action cannot be undone.',
+            onOk: () => deleteSelectedTasks(),
+        });
+    };
 
     // Handle pagination change
     const handlePaginationChange = (page, size) => {
@@ -59,15 +71,22 @@ const TasksPage = () => {
         <div className={styles.pageContainer}>
             <div className={styles.pageHeader}>
                 <h1 className={styles.pageTitle}>Welcome to Task Manager</h1>
-                <Button
-                    className={styles.createButton}
-
-                    type="primary"
-                    icon={<PlusOutlined />}
-                    onClick={() => openModal()} // null = add mode
-                >
-                    Create Task
-                </Button>
+                <Space>
+                    <Button
+                        className={styles.createButton}
+                        type="primary"
+                        icon={<PlusOutlined />}
+                        onClick={() => openModal()}
+                    >
+                        Create Task
+                    </Button>
+                    <Button
+                        type={isBulkDeleteMode ? 'danger' : 'default'}
+                        onClick={isBulkDeleteMode ? handleDeleteSelectedTasks : toggleBulkDeleteMode}
+                    >
+                        {isBulkDeleteMode ? `Delete selected (${selectedTaskIds.length})` : 'Select tasks'}
+                    </Button>
+                </Space>
                 <div style={{position: 'relative'}}>
                     <SearchBox searchTerm={searchTerm} onSearch={setSearchTerm}/>
                     {searchTerm && (

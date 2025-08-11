@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types';
-import { Table, Button, Space, Tag } from 'antd';
+import { Table, Button, Tag } from 'antd';
 import {EditOutlined, DeleteOutlined, CheckOutlined} from '@ant-design/icons';
 import CustomPagination from '../common/CustomPagination';
 import styles from '../../styles/components/TaskList.module.css'
@@ -13,10 +13,20 @@ const TaskList = ({ tasks, loading, onEdit, onDelete, pagination, onPaginationCh
             key: 'title',
             render: (title, record) => (
                 <div>
-                    <div className={styles.taskTitle}>{title}</div>
+                    <div className={styles.taskTitle}>
+                        {/* Cắt ngắn tiêu đề */}
+                        {title && title.length > 50
+                            ? `${title.substring(0, 50)}...`
+                            : title
+                        }
+                    </div>
                     {record.description && (
                         <div className={styles.taskDescription}>
-                            {record.description}
+                            {/* Cắt ngắn mô tả */}
+                            {record.description.length > 100
+                                ? `${record.description.substring(0, 100)}...`
+                                : record.description
+                            }
                         </div>
                     )}
                 </div>
@@ -118,6 +128,15 @@ const TaskList = ({ tasks, loading, onEdit, onDelete, pagination, onPaginationCh
                 loading={loading}
                 rowKey="id"
                 pagination={false}
+                expandable={{
+                    expandedRowRender: (record) => (
+                        // Hiển thị toàn bộ mô tả khi click mở rộng
+                        <p className={styles.expandedDescription}>
+                            {record.description}
+                        </p>
+                    ),
+                    rowExpandable: (record) => record.description !== '', // Chỉ cho phép mở rộng nếu có mô tả
+                }}
                 locale={{
                     emptyText: 'No tasks yet. Create your first task!'
                 }}

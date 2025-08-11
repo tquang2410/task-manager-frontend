@@ -12,8 +12,6 @@ const { Header: AntHeader } = Layout;
 const Header = () => {
     const navigate = useNavigate();
     const { user, logout, isAuthenticated } = useAuth();
-    console.log('🔍 Header render - user avatarId:', user?.avatarId);
-    console.log('🔍 Header render - user object:', user);
 
 
     // Chỗ này xử lý đăng xuất
