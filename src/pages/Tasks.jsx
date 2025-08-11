@@ -6,6 +6,7 @@ import TaskModal from '../components/tasks/TaskModal';
 import TaskList from '../components/tasks/TaskList';
 import styles from '../styles/components/PageLayout.module.css'
 import SearchBox from "../components/common/SearchBox.jsx";
+import SearchSuggestions from "../components/common/SearchSuggestions.jsx";
 const TasksPage = () => {
     // Get state and actions from TaskContext
     const {
@@ -17,6 +18,7 @@ const TasksPage = () => {
         deleteTask,
         searchTerm,
         setSearchTerm,
+        suggestionTasks
     } = useTask();
 
     // Local pagination state
@@ -66,8 +68,14 @@ const TasksPage = () => {
                 >
                     Create Task
                 </Button>
-                <div>
+                <div style={{position: 'relative'}}>
                     <SearchBox searchTerm={searchTerm} onSearch={setSearchTerm}/>
+                    {searchTerm && (
+                        <SearchSuggestions
+                            suggestions={suggestionTasks}
+                            onSelect={setSearchTerm}
+                        />
+                    )}
                 </div>
             </div>
 

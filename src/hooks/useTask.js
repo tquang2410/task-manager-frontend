@@ -93,11 +93,6 @@ const useTask = () => {
     // Lower case search term for case-insensitive search
     const searchTermLower = searchTerm.toLowerCase();
 
-    // Filter tasks based on search term
-    // const filteredTasks = tasks.filter(task => {
-    //     if (filter === 'all') return true;
-    //     return task.status === filter;
-    // });
     const filteredTasks = tasks.filter(task => {
         // Search title
         const searchMatch = task.title.toLowerCase().includes(searchTermLower);
@@ -105,7 +100,10 @@ const useTask = () => {
         const statusMatch = filter === 'all' || task.status === filter;
 
         return searchMatch && statusMatch;
-    })
+    });
+
+    // Suggestion search term
+    const suggestionTasks = searchTerm ? tasks.filter(task => task.title.toLowerCase().includes(searchTermLower)).slice(0, 10) : []; // Limit suggestions to 10
 
     const isEditMode = editingTask !== null;
 
@@ -119,6 +117,7 @@ const useTask = () => {
         editingTask,
         isEditMode,
         searchTerm,
+        suggestionTasks,
 
         // Actions
         loadTasks,
