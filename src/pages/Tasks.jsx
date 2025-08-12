@@ -1,12 +1,13 @@
 import React, { useState } from 'react';
 import { Button, Space, Modal } from 'antd';
-import { PlusOutlined } from '@ant-design/icons';
+import { PlusOutlined, LeftOutlined } from '@ant-design/icons';
 import useTask from '../hooks/useTask';
 import TaskModal from '../components/tasks/TaskModal';
 import TaskList from '../components/tasks/TaskList';
-import styles from '../styles/components/PageLayout.module.css'
+import styles from '../styles/components/PageLayout.module.css';
 import SearchBox from "../components/common/SearchBox.jsx";
 import SearchSuggestions from "../components/common/SearchSuggestions.jsx";
+
 const TasksPage = () => {
     // Get state and actions from TaskContext
     const {
@@ -80,22 +81,35 @@ const TasksPage = () => {
                     >
                         Create Task
                     </Button>
+                </Space>
+            </div>
+
+            <div className={styles.toolbar}>
+                <Space>
+                    <div style={{position: 'relative', flexGrow: 1}}>
+                        <SearchBox searchTerm={searchTerm} onSearch={setSearchTerm}/>
+                        {searchTerm && (
+                            <SearchSuggestions
+                                suggestions={suggestionTasks}
+                                onSelect={setSearchTerm}
+                            />
+                        )}
+                    </div>
+                </Space>
+                <Space>
+                    {isBulkDeleteMode && (
+                        <Button onClick={() => toggleBulkDeleteMode()}>
+                            <LeftOutlined /> Back
+                        </Button>
+                    )}
                     <Button
                         type={isBulkDeleteMode ? 'danger' : 'default'}
                         onClick={isBulkDeleteMode ? handleDeleteSelectedTasks : toggleBulkDeleteMode}
+                        disabled={isBulkDeleteMode && selectedTaskIds.length === 0}
                     >
                         {isBulkDeleteMode ? `Delete selected (${selectedTaskIds.length})` : 'Select tasks'}
                     </Button>
                 </Space>
-                <div style={{position: 'relative'}}>
-                    <SearchBox searchTerm={searchTerm} onSearch={setSearchTerm}/>
-                    {searchTerm && (
-                        <SearchSuggestions
-                            suggestions={suggestionTasks}
-                            onSelect={setSearchTerm}
-                        />
-                    )}
-                </div>
             </div>
 
             <div className="filter-buttons">
@@ -136,6 +150,9 @@ const TasksPage = () => {
                 onDelete={handleDeleteTask}
                 pagination={pagination}
                 onPaginationChange={handlePaginationChange}
+                isBulkDeleteMode={isBulkDeleteMode}
+                selectedTaskIds={selectedTaskIds}
+                toggleTaskSelection={toggleTaskSelection}
             />
 
             {/* TaskModal */}

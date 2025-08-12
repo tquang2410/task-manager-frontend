@@ -73,6 +73,13 @@ export const taskAPI = {
         const response = await axiosInstance.delete(`/v1/api/tasks/${taskId}`);
         return response;
     },
+    // Delete multiple tasks
+    deleteBulkTasks: async (taskIds) => {
+        const response = await axiosInstance.delete('/v1/api/tasks/bulk', {
+            data: { ids: taskIds },
+        });
+        return response;
+    },
 
     // Update task status
     updateTaskStatus: async (taskId, status) => {

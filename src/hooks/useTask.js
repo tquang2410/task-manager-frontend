@@ -98,12 +98,16 @@ const useTask = () => {
 
     // Delete bulk tasks
     const deleteSelectedTasks = async () => {
+        if (selectedTaskIds.length === 0) return;
+
         try {
-            dispatch(deleteTask(selectedTaskIds)); // Dispatch action to delete tasks
+            await taskAPI.deleteBulkTasks(selectedTaskIds);
+            dispatch(deleteTask(selectedTaskIds));
+            message.success(`Deleted ${selectedTaskIds.length} tasks successfully`);
             setSelectedTaskIds([]); // Clear selection after deletion
             setIsBulkDeleteMode(false); // Exit bulk delete mode
-        }
-        catch (error) {
+        } catch (error) {
+            console.error('API Error:', error.response);
             message.error('Failed to delete selected tasks');
         }
     };
@@ -175,6 +179,7 @@ const useTask = () => {
         toggleBulkDeleteMode,
         deleteSelectedTasks,
         toggleTaskSelection,
+
     };
 };
 
