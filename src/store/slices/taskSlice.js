@@ -7,6 +7,8 @@ const initialState = {
     isModalOpen: false,
     editingTask: null,
     searchTerm: '',
+    isGachaModalOpen: false,
+    gachaResults: [],
 };
 
 const taskSlice = createSlice({
@@ -72,6 +74,14 @@ const taskSlice = createSlice({
         setSearchTerm: (state, action) => {
             state.searchTerm = action.payload;
         },
+        openGachaModal: (state, action) => {
+            state.isGachaModalOpen = true;
+            state.gachaResults = action.payload ; // Set gacha results if provided
+        },
+        closeGachaModal: (state) => {
+            state.isGachaModalOpen = false;
+            state.gachaResults = []; // Clear gacha results when closing
+        },
     },
 });
 
@@ -88,6 +98,8 @@ export const {
     openModal,
     closeModal,
     setSearchTerm,
+    openGachaModal,
+    closeGachaModal,
 } = taskSlice.actions;
 
 // Export reducer

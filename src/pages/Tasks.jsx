@@ -1,15 +1,32 @@
-import React, { useState } from 'react';
-import { Button, Space, Modal } from 'antd';
+
+import React, {useEffect, useState} from 'react';
+import { Button, Space, Modal, Spin } from 'antd';
 import { PlusOutlined, LeftOutlined } from '@ant-design/icons';
+import { useDispatch, useSelector } from 'react-redux'; // Thêm useDispatch, useSelector
 import useTask from '../hooks/useTask';
 import TaskModal from '../components/tasks/TaskModal';
 import TaskList from '../components/tasks/TaskList';
 import styles from '../styles/components/PageLayout.module.css';
-import SearchBox from "../components/common/SearchBox.jsx";
-import SearchSuggestions from "../components/common/SearchSuggestions.jsx";
+import SearchBox from '../components/common/SearchBox.jsx';
+import SearchSuggestions from '../components/common/SearchSuggestions.jsx';
+import GachaModal from '../components/common/GachaModal'; // Import GachaModal
+import { closeGachaModal } from '../store/slices/taskSlice'; // Import action closeGachaModal
 
 const TasksPage = () => {
-    // Get state and actions from TaskContext
+    const dispatch = useDispatch();
+    const { isGachaModalOpen, gachaResults } = useSelector(state => state.tasks);
+    const [localIsGachaModalOpen, setLocalIsGachaModalOpen] = useState(false);
+    useEffect(() => {
+        if ( isGachaModalOpen) {
+            setLocalIsGachaModalOpen(true);
+        } else
+        {
+            const timer = setTimeout(() => {
+                setLocalIsGachaModalOpen(false);
+            }, 500); // Delay to allow modal to close smoothly
+            return () => clearTimeout(timer);
+        }
+    }, [isGachaModalOpen]);
     const {
         filteredTasks,
         loading,
@@ -27,23 +44,20 @@ const TasksPage = () => {
         deleteSelectedTasks,
     } = useTask();
 
-    // Local pagination state
     const [pagination, setPagination] = useState({
         current: 1,
         pageSize: 10,
         total: filteredTasks.length,
     });
 
-    // Update pagination total when filteredTasks change
     React.useEffect(() => {
         setPagination(prev => ({
             ...prev,
             total: filteredTasks.length,
-            current: 1, // Reset to page 1 when filter changes
+            current: 1,
         }));
     }, [filteredTasks.length]);
 
-    // Handle delete with confirmation
     const handleDeleteTask = (taskId) => {
         Modal.confirm({
             title: 'Are you sure?',
@@ -58,14 +72,16 @@ const TasksPage = () => {
             onOk: () => deleteSelectedTasks(),
         });
     };
-
-    // Handle pagination change
     const handlePaginationChange = (page, size) => {
         setPagination(prev => ({
             ...prev,
             current: page,
             pageSize: size,
         }));
+    };
+
+    const handleCloseGachaModal = () => {
+        dispatch(closeGachaModal());
     };
 
     return (
@@ -113,7 +129,6 @@ const TasksPage = () => {
             </div>
 
             <div className="filter-buttons">
-                {/* Filter Buttons */}
                 <Space style={{ marginBottom: 16 }}>
                     <Button
                         type={filter === 'all' ? 'primary' : 'default'}
@@ -142,7 +157,6 @@ const TasksPage = () => {
                 </Space>
             </div>
 
-            {/* TaskList component with pagination */}
             <TaskList
                 tasks={filteredTasks}
                 loading={loading}
@@ -155,8 +169,12 @@ const TasksPage = () => {
                 toggleTaskSelection={toggleTaskSelection}
             />
 
-            {/* TaskModal */}
             <TaskModal />
+            <GachaModal
+                isOpen={localIsGachaModalOpen}
+                onClose={handleCloseGachaModal}
+                tasks={gachaResults}
+            />
         </div>
     );
 };

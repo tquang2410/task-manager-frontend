@@ -1,16 +1,19 @@
-// ví dụ trong file src/components/Sidebar.js
+
 import React,{ useState} from 'react';
 import { Layout, Menu } from 'antd';
 import { useNavigate, useLocation } from 'react-router-dom';
 import styles from '../../styles/components/Sidebar.module.css';
+
 import { DashboardOutlined, ProfileOutlined, UnorderedListOutlined } from '@ant-design/icons';
 import DateTimeDisplay from '../common/DateTimeDisplay';
-const { Sider } = Layout;
+import GachaButton from "../common/GachaButton.jsx";
 
+
+const { Sider } = Layout;
 const Sidebar = () => {
     const navigate = useNavigate();
     const location = useLocation();
-    const [collapsed, setCollapsed] = useState(false); // Thêm state để quản lý trạng thái thu gọn
+    const [collapsed, setCollapsed] = useState(false); // State to manage sidebar collapse
     const menuItems = [
         { key: '/', label: 'Dashboard', icon: <DashboardOutlined /> },
         { key: '/tasks', label: 'Tasks', icon: <UnorderedListOutlined /> },
@@ -33,6 +36,10 @@ const Sidebar = () => {
                     showDate={false}
                     showWeekday={false}
                 />
+            </div>
+             {/* Gacha Button */}
+            <div className={styles.gachaButtonContainer}>
+                <GachaButton/>
             </div>
             <Menu
                 theme="dark"

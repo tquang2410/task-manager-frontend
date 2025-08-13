@@ -116,3 +116,9 @@
 .timeDisplay :global(.ant-typography) {
     color: white !important;
 }
+
+.gachaButtonContainer {
+    padding: 0 16px; /* Căn lề cho nút Gacha */
+    margin: 16px 0; /* Tạo khoảng cách trên dưới */
+    text-align: center;
+}

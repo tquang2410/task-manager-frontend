@@ -26,7 +26,7 @@ const TaskForm = ({ onCancel, isEditMode = false }) => {
                 name="description"
                 label="Description"
                 rules={[
-                    { max: 1000, message: 'Description must be less than 500 characters!' }
+                    { max: 1000, message: 'Description must be less than 1000 characters!' }
                 ]}
             >
                 <Input.TextArea
