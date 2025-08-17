@@ -1,32 +1,37 @@
-
 import React, {useEffect, useState} from 'react';
 import { Button, Space, Modal, Spin } from 'antd';
 import { PlusOutlined, LeftOutlined } from '@ant-design/icons';
-import { useDispatch, useSelector } from 'react-redux'; // Thêm useDispatch, useSelector
+import { useDispatch, useSelector } from 'react-redux';
 import useTask from '../hooks/useTask';
 import TaskModal from '../components/tasks/TaskModal';
 import TaskList from '../components/tasks/TaskList';
 import styles from '../styles/components/PageLayout.module.css';
 import SearchBox from '../components/common/SearchBox.jsx';
 import SearchSuggestions from '../components/common/SearchSuggestions.jsx';
-import GachaModal from '../components/common/GachaModal'; // Import GachaModal
-import { closeGachaModal } from '../store/slices/taskSlice'; // Import action closeGachaModal
+import GachaModal from '../components/common/GachaModal';
+import { closeGachaModal } from '../store/slices/taskSlice';
 
 const TasksPage = () => {
     const dispatch = useDispatch();
     const { isGachaModalOpen, gachaResults } = useSelector(state => state.tasks);
     const [localIsGachaModalOpen, setLocalIsGachaModalOpen] = useState(false);
+
+    // Sửa hàm handleTaskSelect để nó nhận toàn bộ đối tượng task
+    const handleTaskSelect = (task) => {
+        openModal(task);
+    };
+
     useEffect(() => {
         if ( isGachaModalOpen) {
             setLocalIsGachaModalOpen(true);
-        } else
-        {
+        } else {
             const timer = setTimeout(() => {
                 setLocalIsGachaModalOpen(false);
-            }, 500); // Delay to allow modal to close smoothly
+            }, 500);
             return () => clearTimeout(timer);
         }
     }, [isGachaModalOpen]);
+
     const {
         filteredTasks,
         loading,
@@ -174,6 +179,7 @@ const TasksPage = () => {
                 isOpen={localIsGachaModalOpen}
                 onClose={handleCloseGachaModal}
                 tasks={gachaResults}
+                onTaskSelect={handleTaskSelect}
             />
         </div>
     );
