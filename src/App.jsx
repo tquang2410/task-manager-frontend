@@ -1,20 +1,21 @@
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import { ConfigProvider, Layout } from 'antd';
 import './styles/global.css'
-// import { Provider } from 'react-redux';
-// import store from './store';
-// Import pages
 import DashboardPage from './pages/Dashboard';
 import LoginPage from './pages/Login';
 import RegisterPage from './pages/Register';
 import TasksPage from './pages/Tasks';
 import ProfilePage from './pages/Profile';
+import { useDispatch, useSelector } from 'react-redux';
+import { closeGachaModal, openModal } from './store/slices/taskSlice';
+import GachaModal from './components/common/GachaModal';
+
 
 // Import layout components
 import Header from './components/layout/Header';
 import ProtectedRoute from './components/auth/ProtectedRoute';
 import Sidebar from "./components/layout/Sidebar.jsx";
-
+import TaskModal from './components/tasks/TaskModal';
 
 // Ant Design theme config
 const theme = {
@@ -24,9 +25,21 @@ const theme = {
     },
 };
 const { Content } = Layout;
-function App() {
-    return (
 
+function App() {
+    const dispatch = useDispatch();
+    const { isGachaModalOpen, gachaResults } = useSelector(state => state.tasks);
+
+    // Hàm này sẽ mở TaskModal với dữ liệu của task được chọn
+    const handleTaskSelect = (task) => {
+        dispatch(openModal(task));
+    };
+
+    const handleCloseGachaModal = () => {
+        dispatch(closeGachaModal());
+    };
+
+    return (
         <ConfigProvider theme={theme}>
             <Router>
                 <div className="app">
@@ -57,6 +70,13 @@ function App() {
                         } />
                     </Routes>
                 </div>
+                <GachaModal
+                    isOpen={isGachaModalOpen}
+                    onClose={handleCloseGachaModal}
+                    tasks={gachaResults}
+                    onTaskSelect={handleTaskSelect}
+                />
+                <TaskModal />
             </Router>
         </ConfigProvider>
     );

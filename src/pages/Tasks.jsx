@@ -8,29 +8,9 @@ import TaskList from '../components/tasks/TaskList';
 import styles from '../styles/components/PageLayout.module.css';
 import SearchBox from '../components/common/SearchBox.jsx';
 import SearchSuggestions from '../components/common/SearchSuggestions.jsx';
-import GachaModal from '../components/common/GachaModal';
-import { closeGachaModal } from '../store/slices/taskSlice';
+
 
 const TasksPage = () => {
-    const dispatch = useDispatch();
-    const { isGachaModalOpen, gachaResults } = useSelector(state => state.tasks);
-    const [localIsGachaModalOpen, setLocalIsGachaModalOpen] = useState(false);
-
-    // Sửa hàm handleTaskSelect để nó nhận toàn bộ đối tượng task
-    const handleTaskSelect = (task) => {
-        openModal(task);
-    };
-
-    useEffect(() => {
-        if ( isGachaModalOpen) {
-            setLocalIsGachaModalOpen(true);
-        } else {
-            const timer = setTimeout(() => {
-                setLocalIsGachaModalOpen(false);
-            }, 500);
-            return () => clearTimeout(timer);
-        }
-    }, [isGachaModalOpen]);
 
     const {
         filteredTasks,
@@ -85,9 +65,6 @@ const TasksPage = () => {
         }));
     };
 
-    const handleCloseGachaModal = () => {
-        dispatch(closeGachaModal());
-    };
 
     return (
         <div className={styles.pageContainer}>
@@ -175,12 +152,6 @@ const TasksPage = () => {
             />
 
             <TaskModal />
-            <GachaModal
-                isOpen={localIsGachaModalOpen}
-                onClose={handleCloseGachaModal}
-                tasks={gachaResults}
-                onTaskSelect={handleTaskSelect}
-            />
         </div>
     );
 };
