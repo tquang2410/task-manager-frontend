@@ -26,10 +26,6 @@ const Sidebar = () => {
                onCollapse={(value) => setCollapsed(value)}
                width={220}
                className={styles.sidebar}>
-            {/* Logo */}
-            <div className={styles.logo}>
-                📋 Task Manager
-            </div>
             <div className={styles.timeDisplay}>
                 <DateTimeDisplay
                     showTime={true}

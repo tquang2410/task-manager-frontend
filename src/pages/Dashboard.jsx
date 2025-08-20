@@ -1,7 +1,9 @@
 import useAuth from "../hooks/useAuth.js";
 import useTask from "../hooks/useTask.js";
+import Task_manager_logo from "../assets/task_manager_logo.png";
 import { Card, Col, Row, Statistic, List } from "antd";
 import styles from '../styles/components/Dashboard.module.css';
+import React from "react";
 
 const DashboardPage = () => {
     const { user } = useAuth();
@@ -20,10 +22,14 @@ const DashboardPage = () => {
 
     return (
         <div className={styles.dashboard}>
+            <img src={Task_manager_logo} alt="Task Manager Logo" className={styles.logo} />
             <div className={styles.welcomeSection}>
+
                 <h1 className={styles.welcomeTitle}>
+
                     Welcome back, <span className={styles.userName}>{user?.name}!</span>
                 </h1>
+
             </div>
 
             <Row gutter={16} className={styles.statsGrid}>

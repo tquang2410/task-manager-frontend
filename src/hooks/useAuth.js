@@ -14,16 +14,20 @@ const useAuth = () => {
             dispatch(setLoading(true));
             const response = await authAPI.login(email, password);
             if (!response.success) {
-                throw response;
+                // throw response;
+                dispatch(setLoading(false));
+                return { success: false, EM: response.EM };
             }
             dispatch(loginSuccess({
                 user: response.user,
                 token: response.accessToken
             }));
+            return { success: true, user: response.user };
         } catch (error) {
             console.log('Login error:', error);
             dispatch(setLoading(false));
-            throw error;
+            // throw error;
+            return { success: false, EM: error.response?.data?.EM || 'Server error. Please try again.' };
         }
     };
     const handleLogout = () => {

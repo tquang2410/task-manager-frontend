@@ -9,21 +9,21 @@
     padding-top: 46px; /* Khoảng cách từ trên xuống cho logo/menu */
 }
 
-.logo {
-    /* Style cho logo trong sidebar (nếu bạn giữ nó ở đây) */
-    height: 46px; /* Chiều cao cố định cho logo */
-    margin: 16px; /* Khoảng cách xung quanh logo */
-    background: rgba(255, 255, 255, 0.2); /* Nền mờ cho logo */
-    border-radius: 6px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    color: white;
-    font-size: var(--font-size-md); /* Kích thước font cho logo */
-    font-weight: bold;
-    white-space: nowrap;
-    overflow: hidden; /* Đảm bảo text không tràn khi sidebar thu gọn */
-}
+/*.logo {*/
+/*    !* Style cho logo trong sidebar (nếu bạn giữ nó ở đây) *!*/
+/*    height: 46px; !* Chiều cao cố định cho logo *!*/
+/*    margin: 16px; !* Khoảng cách xung quanh logo *!*/
+/*    background: rgba(255, 255, 255, 0.2); !* Nền mờ cho logo *!*/
+/*    border-radius: 6px;*/
+/*    display: flex;*/
+/*    justify-content: center;*/
+/*    align-items: center;*/
+/*    color: white;*/
+/*    font-size: var(--font-size-md); !* Kích thước font cho logo *!*/
+/*    font-weight: bold;*/
+/*    white-space: nowrap;*/
+/*    overflow: hidden; !* Đảm bảo text không tràn khi sidebar thu gọn *!*/
+/*}*/
 
 /* Ghi đè style của Ant Design Menu */
 .sidebar :global(.ant-menu) {

@@ -1,9 +1,18 @@
-import React from 'react';
+// src/components/common/GachaModal.jsx
+import React, { useEffect, useState } from 'react';
 import { Modal } from 'antd';
 import { motion, AnimatePresence } from 'framer-motion';
 import styles from '../../styles/components/GachaModal.module.css';
 
 const GachaModal = ({ isOpen, onClose, tasks, onTaskSelect }) => {
+    const [gachaSessionId, setGachaSessionId] = useState(0);
+
+    useEffect(() => {
+        if (isOpen) {
+            setGachaSessionId(prevId => prevId + 1);
+        }
+    }, [isOpen]);
+
     const cardVariants = {
         hidden: {
             opacity: 0,
@@ -50,7 +59,7 @@ const GachaModal = ({ isOpen, onClose, tasks, onTaskSelect }) => {
     };
 
     const handleTaskClick = (task) => {
-        onTaskSelect(task); // Truyền toàn bộ đối tượng task
+        onTaskSelect(task);
         onClose();
     };
 
@@ -66,24 +75,21 @@ const GachaModal = ({ isOpen, onClose, tasks, onTaskSelect }) => {
                 <span className={styles.fireworkIconLeft}>🎉</span>
                 <span className={styles.fireworkIconRight}>🎉</span>
 
-                <AnimatePresence>
-                    {isOpen && (
-                        <motion.div
-                            initial={{ opacity: 0, y: -50 }}
-                            animate={{ opacity: 1, y: 0 }}
-                            exit={{ opacity: 0, y: -50 }}
-                            transition={{ duration: 0.5 }}
-                        >
-                            <h1 className={styles.modalTitle}>🎉 Gacha Results! 🎉</h1>
-                        </motion.div>
-                    )}
-                </AnimatePresence>
+                <motion.div
+                    initial={{ opacity: 0, y: -50 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: -50 }}
+                    transition={{ duration: 0.5 }}
+                    key={`modal-title-${gachaSessionId}`}
+                >
+                    <h1 className={styles.modalTitle}>🎉 Gacha Results! 🎉</h1>
+                </motion.div>
 
                 <div className={styles.gachaContainer}>
-                    <AnimatePresence>
+                    <AnimatePresence key={`gacha-cards-${gachaSessionId}`}>
                         {isOpen && tasks.map((task, index) => (
                             <motion.div
-                                key={task.id}
+                                key={`${task.id}-${gachaSessionId}`}
                                 className={`${styles.gachaCard} ${getCardColorClass(task.priority)}`}
                                 variants={cardVariants}
                                 initial="hidden"
